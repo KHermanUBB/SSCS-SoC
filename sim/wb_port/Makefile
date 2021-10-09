@@ -15,7 +15,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ## Caravel Pointers
-CARAVEL_ROOT ?= ../../../../../caravel
+#CARAVEL_ROOT ?= ../../../../../caravel
+CARAVEL_ROOT ?= $(CARAVEL_DIR)
 CARAVEL_PATH ?= $(CARAVEL_ROOT)
 CARAVEL_FIRMWARE_PATH = $(CARAVEL_PATH)/verilog/dv/caravel
 CARAVEL_VERILOG_PATH  = $(CARAVEL_PATH)/verilog
@@ -29,9 +30,9 @@ UPRJ_SRC_PATH = $(UPRJ_VERILOG_PATH)/src
 UPRJ_BEHAVIOURAL_MODELS = ../
 
 ## RISCV GCC 
-GCC_PATH?=/opt/riscv32/bin
+GCC_PATH?= $(RV32_GCC)
 GCC_PREFIX?=riscv32-unknown-elf
-PDK_PATH?=/home/icarosix/asictoolchain/OpenLane/pdks/sky130A/
+PDK_PATH?=$(PDK_ROOT)/sky130A
 
 ## Simulation mode: RTL/GL
 SIM?=RTL
