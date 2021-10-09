@@ -85,15 +85,10 @@ module top (
 
 
   always@(posedge wb_clk_i) begin
-	
-		if(wb_rst_i) begin
-			wbs_done  <= 0;
-			status    <= 0;
-			prescaler <= 49;
-            rdata     <= 0;
-		end
-		
-   if (wb_valid && addr_valid)  begin  
+	if(wb_rst_i) begin
+		valid_i <= 0;
+	end
+	if (wb_valid && addr_valid)  begin  
         case(addr[8:4])   
 				 'd0 :  begin  valid_i[0]  <= 1'b1; end  
 				 'd1 :  begin  valid_i[1]  <= 1'b1; end 
@@ -111,7 +106,9 @@ module top (
     end
     else 
       valid_i <= 0;
-  end 
+  end
+
+ 
 wire cond1;
 wire cond2;
 wire [31:0] data_o;
