@@ -1,0 +1,7 @@
+Clock wb_clk_i
+Latency      CRPR       Skew
+_28144_/CLK ^
+0.000000
+_28144_/CLK ^
+0.000000   0.000000    0.000000
+
