@@ -1,0 +1,82 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Sat Oct  9 14:44:19 2021
+[*]
+[dumpfile] "/home/icarosix/ASIC/Sonar-on-Chip/sim/wb_port/wb_port.vcd"
+[dumpfile_mtime] "Sat Oct  9 14:25:14 2021"
+[dumpfile_size] 410536835
+[savefile] "/home/icarosix/ASIC/Sonar-on-Chip/sim/wb_port/myconf.gtkw"
+[timestart] 332304000
+[size] 1916 1041
+[pos] -1 -1
+*-19.632885 336512500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] wb_port_tb.
+[treeopen] wb_port_tb.uut.
+[treeopen] wb_port_tb.uut.mprj.
+[treeopen] wb_port_tb.uut.mprj.SoCTopModule.
+[treeopen] wb_port_tb.uut.soc.
+[treeopen] wb_port_tb.uut.soc.soc.
+[treeopen] wb_port_tb.uut.soc.soc.cpu.
+[treeopen] wb_port_tb.uut.soc.soc.cpu.picorv32_core.
+[treeopen] wb_port_tb.uut.soc.soc.cpu.picorv32_core.genblk1.
+[treeopen] wb_port_tb.uut.soc.soc.cpu.picorv32_core.genblk2.
+[treeopen] wb_port_tb.uut.soc.soc.soc_mem.mem.
+[treeopen] wb_port_tb.uut.soc.soc.soc_mem.mem.SRAM.
+[sst_width] 297
+[signals_width] 214
+[sst_expanded] 1
+[sst_vpaned_height] 473
+@22
+wb_port_tb.uut.mprj.SoCTopModule.soc1.control[15:0]
+wb_port_tb.uut.mprj.SoCTopModule.soc1.amp[15:0]
+wb_port_tb.uut.mprj.SoCTopModule.soc1.pcm_load[15:0]
+wb_port_tb.uut.mprj.SoCTopModule.soc1.pcm[15:0]
+wb_port_tb.uut.mprj.SoCTopModule.soc1.threshold[31:0]
+wb_port_tb.uut.mprj.SoCTopModule.soc1.timer[31:0]
+@28
+wb_port_tb.uut.mprj.SoCTopModule.soc1.cmp
+wb_port_tb.uut.mprj.SoCTopModule.soc1.clear
+wb_port_tb.uut.mprj.SoCTopModule.soc1.mclk
+wb_port_tb.uut.mprj.SoCTopModule.soc1.ce_pcm
+@22
+wb_port_tb.uut.mprj.SoCTopModule.dat_i[15:0]
+wb_port_tb.uut.mprj.SoCTopModule.dat_o[15:0]
+wb_port_tb.uut.mprj.SoCTopModule.adr_i[3:0]
+wb_port_tb.uut.mprj.SoCTopModule.wbs_adr_i[31:0]
+@28
+wb_port_tb.uut.mprj.SoCTopModule.wb_valid
+@22
+wb_port_tb.uut.mprj.SoCTopModule.soc2.control[15:0]
+wb_port_tb.uut.mprj.SoCTopModule.wbs_dat_o[31:0]
+wb_port_tb.uut.mprj.SoCTopModule.soc2.wbs_dat_o[15:0]
+wb_port_tb.uut.mprj.wbs_dat_o[31:0]
+wb_port_tb.uut.mprj.SoCTopModule.status[15:0]
+@29
+wb_port_tb.uut.mprj.SoCTopModule.addr_valid
+@28
+wb_port_tb.uut.mprj.SoCTopModule.wb_valid
+wb_port_tb.uut.mprj.SoCTopModule.wb_clk_i
+@800022
+wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+@28
+(0)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(1)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(2)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(3)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(4)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(5)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(6)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(7)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(8)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(9)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(10)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+(11)wb_port_tb.uut.mprj.SoCTopModule.valid_i[11:0]
+@22
+wb_port_tb.uut.soc.soc.cpu_dat_i[31:0]
+wb_port_tb.uut.soc.soc.cpu.picorv32_core.cpuregs.rdata1[31:0]
+wb_port_tb.uut.soc.soc.cpu.picorv32_core.cpuregs.rdata2[31:0]
+wb_port_tb.uut.soc.soc.cpu.picorv32_core.cpuregs.wdata[31:0]
+@1001200
+-group_end
+[pattern_trace] 1
+[pattern_trace] 0
