@@ -84,8 +84,15 @@ module top (
   assign io_oeb[0] = 1'b1;
 
 
-  always@(addr) begin
+  always@(posedge wb_clk_i) begin
 	
+		if(wb_rst_i) begin
+			wbs_done  <= 0;
+			status    <= 0;
+			prescaler <= 49;
+            rdata     <= 0;
+		end
+		
    if (wb_valid && addr_valid)  begin  
         case(addr[8:4])   
 				 'd0 :  begin  valid_i[0]  <= 1'b1; end  
@@ -105,10 +112,22 @@ module top (
     else 
       valid_i <= 0;
   end 
-wire cond;
-assign cond = ((wbs_adr_i[3:2] == 2'b00) || (wbs_adr_i[3:2] == 2'b01 ));
-assign wbs_dat_o =  cond ?  rdata       :  {{16{dat_o[15]}},dat_o};
-assign wbs_ack_o =  cond ?  wbs_done    :  ack_o;
+wire cond1;
+wire cond2;
+wire [31:0] data_o;
+wire top_ack_o;
+wire [1:0] hi_z;
+
+/* verify slave address 0x3000 0000 scope*/
+assign cond1 = (wbs_adr_i[31:28] == 2'b11);
+/* verify top level module addresses 0x3000 0000 and 0x30000004*/
+assign cond2 = ((wbs_adr_i[3:2] == 2'b00) || (wbs_adr_i[3:2] == 2'b01 ));
+/* verify High impedance of the bus*/
+assign top_ack_o = (&hi_z) ? 0     : ack_o;
+assign data_o    = (&hi_z) ? 32'b0 : {{16{dat_o[15]}},dat_o};
+
+assign wbs_dat_o =  (cond1 & cond2 )  ?  rdata       :  data_o;
+assign wbs_ack_o =  (cond1 & cond2 )  ?  wbs_done    :  top_ack_o;
 
 	always@(posedge wb_clk_i) begin
 		if(wb_rst_i) begin
@@ -182,7 +201,8 @@ SonarOnChip   soc1(
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[1]),
     .mclear(mclear),
-    .cmp(cmp[0])
+    .cmp(cmp[0]),
+    .hi_z(hi_z[0])
 	);
 
 SonarOnChip   soc2(
@@ -200,7 +220,8 @@ SonarOnChip   soc2(
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[2]),
     .mclear(mclear),
-    .cmp(cmp[1])
+    .cmp(cmp[1]),
+    .hi_z(hi_z[1])
 	);
 
 /*  ----------------------  STRUCTURAL DESIGN ENDS ------------------------- */

@@ -1,2 +1,6 @@
 runs/**
 runs/
+*.gds
+*.lef
+*.mag
+*.vcd

@@ -22,10 +22,10 @@ set ::env(VERILOG_FILES_BLACKBOX) "\
 	$script_dir/macro/defines.v"
 
 set ::env(EXTRA_LEFS) "\
-	$script_dir/../TopSoC/res/lef/topSoC.lef"
+	$script_dir/macro/topSoC.lef"
 
 set ::env(EXTRA_GDS_FILES) "\
-	$script_dir/../TopSoC/res/gds/topSoC.gds"
+	$script_dir/macro/topSoC.gds"
 
 source $script_dir/fixed_wrapper_cfgs.tcl
 
