@@ -1,5 +1,7 @@
 # SSCS-SoC
 
+config.tcl - main script for the OpenLane flow
+
 macro\ - holds two folders, which configure the macro hardening at the: (1) top level, (2) user_project_wrapper level \
 src\ - holds files for  one channel of the SonarOnChip\
 rtl\ - holds verilog files for functional simulation at the level of the whole Caravel Harness\
