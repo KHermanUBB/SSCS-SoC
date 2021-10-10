@@ -283,7 +283,7 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
   /*------------------------   FIR start    -----------------------------------*/
   
   wire [`BUS_WIDTH-1:0] fir_out;
-  FIR_Filter fir_filter(clk, rst, we_pcm, cic_out, fb0, fb1, fb0, fb1, fir_out);
+  FIR_Filter fir_filter(clk, rst, we_pcm, cic_out, fb0, fb1, fir_out);
   
   /*------------------------   FIR ends    -----------------------------------*/
   
