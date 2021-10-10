@@ -13,7 +13,7 @@ place_io
 
 
 
-add_macro_placement TopSoC 210 210 N
+add_macro_placement SoCTopModule 210 210 N
 
 manual_macro_placement f
 
