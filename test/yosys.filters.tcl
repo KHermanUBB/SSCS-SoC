@@ -5,7 +5,8 @@ set RESULTS_DIR ./results
 set SKY130_PATH $env(PDK_ROOT)
 file mkdir $RESULTS_DIR
 #set INCLUDE_DIR ../rtl/include
-set DESIGN_NAME optFIR_Filter
+#set DESIGN_NAME optFIR_Filter
+set DESIGN_NAME IIR_Filter
 
 
 set LIB_FILES {}
@@ -30,7 +31,8 @@ set LIB_FILE ${SKY130_PATH}/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing
 
 
 
-read_verilog optFIR.v
+#read_verilog optFIR.v
+read_verilog optIIR_Filter.v
 #hierarchy -check -top $TOP_MODULE
 synth -top $DESIGN_NAME
 #share -aggressive

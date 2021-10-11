@@ -115,7 +115,6 @@ module SonarOnChip
   reg [2*`BUS_WIDTH-1:0] threshold;
  
 
-  wire iir_valid;
   wire clear;
   wire timer_we;
   wire srlatchQ;
@@ -272,11 +271,12 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
   //../..//rtl/top.v:176: warning: Port 3 (prescaler) of pcm_clk expects 10 bits, got 8.
 
   wire mic_in;
+  wire mic_clk;
   assign mic_in = pdm_data_i;
-
+  assign mic_clk = mclk;
   wire [`BUS_WIDTH-1:0] cic_out;
 
-  RSS0  cicmodule(clk, rst, mclk, mic_in, cic_out);
+  RSS0  cicmodule(clk, rst, mic_clk, mic_in, cic_out);
 
   /*------------------------   PDM ends    -----------------------------------*/
   
@@ -322,7 +322,6 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
     .a2(a2),
     .b1(b1),
     .b2(b2),
-    .valid(iir_valid),
     .Y(iir_data)
 		);
   /*------------------------   IIR ends    -----------------------------------*/

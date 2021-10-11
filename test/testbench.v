@@ -6,13 +6,14 @@ module Filter_behavioral_tb;
   
   parameter N = 16;
   reg clk, rst, en;
-  reg [N-1:0] X, b0, b1;
-  wire [N-1:0] Y;
+  reg [N-1:0] X, b0, b1, a0, a1, a2;
+  wire [N-1:0] Y, Yir;
 
   
   
 /* Module instantiation */  
  optFIR_Filter fir(clk, rst, en, X, b0, b1, Y);
+ IIR_Filter   iir(clk, rst, en, X, a0,a1,a2,b0,b1, Yir);
   
 
 /* clock signal generation*/  
@@ -25,6 +26,9 @@ initial begin
        X  = 1;
        b0 = 16;
        b1 = 32;
+       a0 = 16;
+       a1 = 32;
+       a2 = 64;
        en = 0;
        rst = 1'b0;
   #10  rst = 1'b1;

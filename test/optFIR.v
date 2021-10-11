@@ -23,10 +23,7 @@ module optFIR_Filter
   reg [N-1:0] Yt;
   reg [N-1:0] result; 
 
-  //reg [N-1:0] Yt;
-  
- // assign Y = Yt;
- // assign Yt = (X*b0 + X1*b1 + X2*b2 + X3*b3) >> SHIFT;
+
 
   assign muxsel = ((phase == 2'b00) || (phase == 2'b11)) ? 0 : 1;
   assign coeff  =  (!muxsel)  ? b0 : b1;
@@ -87,8 +84,7 @@ module optFIR_Filter
     end
     else if(cycle_valid)
        	phase <= phase + 1;
-
-end
+    end
 
 /*phase of the computation*/
    always@(posedge clk) begin

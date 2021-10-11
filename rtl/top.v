@@ -1,7 +1,7 @@
 
 `include "defines.v"
 
-`define MAX_SOC 12
+`define MAX_SOC 15
 `define BUS_WIDTH 16 
 
 module top (
@@ -53,7 +53,8 @@ module top (
   wire [3:0] wstrb;
 
 
-  wire  [1:0] cmp;
+  wire  [`MAX_SOC-1:0] cmp;
+  wire [`MAX_SOC-1:0] hi_z;
   wire mclear;
   wire mclk;
   wire ce_pcm;
@@ -111,17 +112,33 @@ module top (
  
 wire cond1;
 wire cond2;
-wire [31:0] data_o;
-wire top_ack_o;
-wire [1:0] hi_z;
+reg [31:0] data_o;
+reg top_ack_o;
+wire tmp;
+
+
+
+always@(hi_z) begin 
+ 
+	if ((&hi_z)) begin
+         top_ack_o <= 1'b0;
+         data_o  <=  32'b0;
+    end 
+    else begin 
+       top_ack_o <= 1'b0;
+       data_o    <= {{16{dat_o[15]}},dat_o};
+    end    
+
+end 
+
 
 /* verify slave address 0x3000 0000 scope*/
 assign cond1 = (wbs_adr_i[31:28] == 2'b11);
 /* verify top level module addresses 0x3000 0000 and 0x30000004*/
 assign cond2 = ((wbs_adr_i[3:2] == 2'b00) || (wbs_adr_i[3:2] == 2'b01 ));
 /* verify High impedance of the bus*/
-assign top_ack_o = (&hi_z) ? 0     : ack_o;
-assign data_o    = (&hi_z) ? 32'b0 : {{16{dat_o[15]}},dat_o};
+//assign top_ack_o = (&hi_z) ? 1'b0     : 1'b1; //ack_o;
+//assign data_o    = (&hi_z) ? 32'b0    : 32'b0; //{{16{dat_o[15]}},dat_o};
 
 assign wbs_dat_o =  (cond1 & cond2 )  ?  rdata       :  data_o;
 assign wbs_ack_o =  (cond1 & cond2 )  ?  wbs_done    :  top_ack_o;
@@ -220,6 +237,293 @@ SonarOnChip   soc2(
     .cmp(cmp[1]),
     .hi_z(hi_z[1])
 	);
+
+SonarOnChip   soc3(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[2]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[3]),
+    .mclear(mclear),
+    .cmp(cmp[2]),
+    .hi_z(hi_z[2])
+	);
+
+SonarOnChip   soc4(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[3]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[4]),
+    .mclear(mclear),
+    .cmp(cmp[3]),
+    .hi_z(hi_z[3])
+	);
+
+SonarOnChip   soc5(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[4]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[5]),
+    .mclear(mclear),
+    .cmp(cmp[4]),
+    .hi_z(hi_z[4])
+	);
+
+SonarOnChip   soc6(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[5]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[6]),
+    .mclear(mclear),
+    .cmp(cmp[5]),
+    .hi_z(hi_z[5])
+	);
+
+SonarOnChip   soc7(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[6]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[7]),
+    .mclear(mclear),
+    .cmp(cmp[6]),
+    .hi_z(hi_z[6])
+	);
+
+SonarOnChip   soc8(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[7]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[8]),
+    .mclear(mclear),
+    .cmp(cmp[7]),
+    .hi_z(hi_z[7])
+	);
+
+SonarOnChip   soc9(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[8]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[9]),
+    .mclear(mclear),
+    .cmp(cmp[8]),
+    .hi_z(hi_z[8])
+	);
+
+SonarOnChip   soc10(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[9]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[10]),
+    .mclear(mclear),
+    .cmp(cmp[9]),
+    .hi_z(hi_z[9])
+	);
+
+SonarOnChip   soc11(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[10]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[11]),
+    .mclear(mclear),
+    .cmp(cmp[10]),
+    .hi_z(hi_z[10])
+	);
+
+SonarOnChip   soc12(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[11]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[12]),
+    .mclear(mclear),
+    .cmp(cmp[11]),
+    .hi_z(hi_z[11])
+	);
+
+SonarOnChip   soc13(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[12]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[13]),
+    .mclear(mclear),
+    .cmp(cmp[12]),
+    .hi_z(hi_z[12])
+	);
+
+
+SonarOnChip   soc14(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[13]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[14]),
+    .mclear(mclear),
+    .cmp(cmp[13]),
+    .hi_z(hi_z[13])
+	);
+
+SonarOnChip   soc15(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[14]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[15]),
+    .mclear(mclear),
+    .cmp(cmp[14]),
+    .hi_z(hi_z[14])
+	);
+/*
+SonarOnChip   soc16(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[15]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[16]),
+    .mclear(mclear),
+    .cmp(cmp[15]),
+    .hi_z(hi_z[15])
+	);
+
+SonarOnChip   soc17(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[16]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .mclk(mclk),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[17]),
+    .mclear(mclear),
+    .cmp(cmp[16]),
+    .hi_z(hi_z[16])
+	);
+*/
 
 /*  ----------------------  STRUCTURAL DESIGN ENDS ------------------------- */
 

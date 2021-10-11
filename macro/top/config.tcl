@@ -18,23 +18,21 @@ set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(DIE_AREA) "0 0 2500 3100"
 ## Internal Macros
 ### Macro Placement
-set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
+#set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
 
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
 	$script_dir/macro/SonarOnChip.v \
 	$script_dir/macro/defines.v"
 
-set ::env(EXTRA_LEFS) "\
-	$script_dir/macro/SonarOnChip.lef"
+set ::env(EXTRA_LEFS) "$script_dir/macro/SonarOnChip.lef"
 
-set ::env(EXTRA_GDS_FILES) "\
-	$script_dir/macro/SonarOnChip.gds"
+set ::env(EXTRA_GDS_FILES) "$script_dir/macro/SonarOnChip.gds"
 
 source $script_dir/fixed_wrapper_cfgs.tcl
 
 
-set ::env(FP_CORE_UTIL) 35
+set ::env(FP_CORE_UTIL) 60
 set ::env(FP_PDN_VOFFSET) 0
 set ::env(FP_PDN_VPITCH) 30
 
