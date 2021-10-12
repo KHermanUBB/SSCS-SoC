@@ -58,6 +58,7 @@ module top (
   wire mclear;
   wire mclk;
   wire ce_pcm;
+  wire ce_pdm;
   wire addr_valid;
 
 
@@ -189,7 +190,8 @@ assign wbs_ack_o =  (cond1 & cond2 )  ?  wbs_done    :  top_ack_o;
 micclk  mic(
         .clk(wb_clk_i),
         .rst(wb_rst_i),
-        .mclk( mclk)
+        .mclk(mclk),
+        .ce_pdm(ce_pdm)
         );
 
 pcm_clk  pcmclk(
@@ -211,7 +213,7 @@ SonarOnChip   soc1(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[1]),
     .mclear(mclear),
@@ -230,7 +232,7 @@ SonarOnChip   soc2(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[2]),
     .mclear(mclear),
@@ -249,7 +251,7 @@ SonarOnChip   soc3(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[3]),
     .mclear(mclear),
@@ -268,7 +270,7 @@ SonarOnChip   soc4(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[4]),
     .mclear(mclear),
@@ -287,7 +289,7 @@ SonarOnChip   soc5(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[5]),
     .mclear(mclear),
@@ -306,7 +308,7 @@ SonarOnChip   soc6(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[6]),
     .mclear(mclear),
@@ -325,7 +327,7 @@ SonarOnChip   soc7(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[7]),
     .mclear(mclear),
@@ -344,7 +346,7 @@ SonarOnChip   soc8(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[8]),
     .mclear(mclear),
@@ -363,7 +365,7 @@ SonarOnChip   soc9(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[9]),
     .mclear(mclear),
@@ -382,7 +384,7 @@ SonarOnChip   soc10(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[10]),
     .mclear(mclear),
@@ -401,7 +403,7 @@ SonarOnChip   soc11(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[11]),
     .mclear(mclear),
@@ -420,7 +422,7 @@ SonarOnChip   soc12(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[12]),
     .mclear(mclear),
@@ -439,7 +441,7 @@ SonarOnChip   soc13(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[13]),
     .mclear(mclear),
@@ -459,7 +461,7 @@ SonarOnChip   soc14(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[14]),
     .mclear(mclear),
@@ -478,7 +480,7 @@ SonarOnChip   soc15(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[15]),
     .mclear(mclear),
@@ -497,7 +499,7 @@ SonarOnChip   soc16(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[16]),
     .mclear(mclear),
@@ -516,7 +518,7 @@ SonarOnChip   soc17(
     .wbs_ack_o(ack_o),
     .wbs_dat_o(dat_o),
     
-    .mclk(mclk),
+    .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[17]),
     .mclear(mclear),

@@ -9,14 +9,18 @@ second clock
 144/3 = 48
 */
 
-module micclk(clk, rst, mclk);
+module micclk(clk, rst, mclk, ce_pdm);
   input clk, rst;
   output mclk;
+  output ce_pdm;
   
   reg  tmp1, tmp2;
   
   assign mclk = ~(tmp1 | tmp2);
   reg [3:0] cnt1, cnt2;
+
+/* delay one cycle vs. MIC Clk*/
+  assign ce_pdm = cnt1==4'b001 ? 1 : 0;
 
   always @(posedge clk)
     begin

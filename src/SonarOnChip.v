@@ -36,7 +36,7 @@ module SonarOnChip
 
     /* Design specific ports*/
     /* 4.8 MHz clock input */
-    input wire  mclk,
+    input wire  ce_pdm,
     /* PCM pace signal */
     input wire  ce_pcm,
     /* External microphone PDM data */
@@ -72,6 +72,10 @@ module SonarOnChip
   wire clk;
   wire rst;
   wire we_pcm;  
+  wire [`BUS_WIDTH-1:0] cic_out;
+  wire [`BUS_WIDTH-1:0] fir_out;
+  wire [2*`BUS_WIDTH-1:0] mul_i;
+  wire [2*`BUS_WIDTH-1:0]iir_data;
 
    /* Compare module wires*/
   wire [2*`BUS_WIDTH-1:0] maf_o;
@@ -85,10 +89,7 @@ module SonarOnChip
   wire [`BUS_WIDTH-1:0] pcm_reg_o;
   /* 32 - bit sign extended pcm value */
   wire [2*`BUS_WIDTH-1:0] pcm32, pcm32abs;
-  
-  /* clock enable wiring*/
-  wire ce;
-  /* Multiplier  output */
+    /* Multiplier  output */
   wire [2*`BUS_WIDTH-1:0] mul_o;
   
  /** Wishbone Slave Interface **/
@@ -237,13 +238,20 @@ module SonarOnChip
 		end
    end 
   
+
+  /*------------------------  PCM starts   -----------------------------------*/
+  
+  assign pcm_reg_i = control[4] ? pcm_load :fir_out;
+  assign pcm_reg_o = pcm;
+ 
 /* pcm register block */
   always@(posedge clk) begin
   	if(rst) 
 		pcm <= 0;
     else if (we_pcm)
-        pcm <= pcm_load;
+        pcm <= pcm_reg_i;
   end
+  /*------------------------   PCM ends    -----------------------------------*/
 
 /* timer register block */
 /*-----------------------------------------------------------------------------*/
@@ -270,37 +278,33 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
   /*------------------------  PDM starts   -----------------------------------*/
   //../..//rtl/top.v:176: warning: Port 3 (prescaler) of pcm_clk expects 10 bits, got 8.
 
-  wire mic_in;
-  wire mic_clk;
-  assign mic_in = pdm_data_i;
-  assign mic_clk = mclk;
-  wire [`BUS_WIDTH-1:0] cic_out;
 
-  RSS0  cicmodule(clk, rst, mic_clk, mic_in, cic_out);
+
+  
+
+  cic  cicmodule( .clk(clk),
+                  .rst(rst),
+                  .we(ce_pdm),
+				  .data_in(pdm_data_i),
+                  .data_out(cic_out)
+                  );
 
   /*------------------------   PDM ends    -----------------------------------*/
   
   /*------------------------   FIR start    -----------------------------------*/
   
-  wire [`BUS_WIDTH-1:0] fir_out;
-  FIR_Filter fir_filter(clk, rst, we_pcm, cic_out, fb0, fb1, fir_out);
+   FIR_Filter fir_filter(clk, rst, we_pcm, cic_out, fb0, fb1, fir_out);
   
   /*------------------------   FIR ends    -----------------------------------*/
   
-  /*------------------------  PCM starts   -----------------------------------*/
-  
-  assign pcm_reg_i = control[4] ? pcm_load :fir_out;
-  assign pcm_reg_o = pcm;
-  
-  /*------------------------   PCM ends    -----------------------------------*/
+
   
   /*------------------------   SE starts    -----------------------------------*/
   signext se(pcm_reg_o, pcm32);
   /*------------------------   SE ends    -----------------------------------*/
   
   /*------------------------  MUL starts   -----------------------------------*/
-	wire [2*`BUS_WIDTH-1:0] mul_i;
-	wire [2*`BUS_WIDTH-1:0]iir_data;
+
 	assign mul_i = control[3] ? pcm32 : iir_data; 
 
   MULTI mul(mul_i, amp, mul_o);
