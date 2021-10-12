@@ -529,7 +529,7 @@ SonarOnChip   soc15(
     .mclear(mclear),
     .cmp(cmp[14])
 	);
-/*
+
 SonarOnChip   soc16(
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),

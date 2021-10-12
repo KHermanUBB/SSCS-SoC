@@ -13,21 +13,19 @@ module FIR_Filter
     input [N-1:0] b1,
     output [N-1:0]   Y);
   
-  reg [N-1:0] X1, X2, X3, X4;
+   reg signed [N-1:0] X1, X2, X3, X4;
   reg [2:0] phase;
   wire muxsel;
   reg cycle_valid;
   
-  wire [N-1:0] coeff;
-  reg [N-1:0] samplevalue;
-  reg [N-1:0] Yt;
-  reg [N-1:0] result; 
+  wire signed [N-1:0] coeff;
+  reg  signed [N-1:0] samplevalue;
+  reg  signed [N-1:0] Yt;
+  reg  signed [N-1:0] result; 
+  wire  signed [2*N-1:0] prod; 
 
-  //reg [N-1:0] Yt;
-  
- // assign Y = Yt;
- // assign Yt = (X*b0 + X1*b1 + X2*b2 + X3*b3) >> SHIFT;
 
+  assign prod = (samplevalue*coeff) >>> 15;
   assign muxsel = ((phase == 2'b00) || (phase == 2'b11)) ? 0 : 1;
   assign coeff  =  (!muxsel)  ? b0 : b1;
   assign Y = Yt; 
@@ -73,7 +71,7 @@ module FIR_Filter
     end
     else begin
     if(cycle_valid)  
-		result <= result + ((samplevalue*coeff) >> 4);
+		result <= result + prod;
     if(phase == 3'b101)
         result <= 0;
     end

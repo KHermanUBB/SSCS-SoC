@@ -6,7 +6,7 @@ module Filter_behavioral_tb;
   
   parameter N = 16;
   reg clk, rst, en;
-  reg [N-1:0] X, b0, b1, a0, a1, a2;
+  reg signed [N-1:0] X, b0, b1, a0, a1, a2;
   wire [N-1:0] Y, Yir;
 
   
@@ -23,9 +23,9 @@ initial begin
 end 
   
 initial begin
-       X  = 1;
-       b0 = 16;
-       b1 = 32;
+       X  =0;
+       b0 = -2676;
+       b1 = 18952;
        a0 = 16;
        a1 = 32;
        a2 = 64;
@@ -33,21 +33,29 @@ initial begin
        rst = 1'b0;
   #10  rst = 1'b1;
   #10  rst = 1'b0;
-        X <= 2 ;
+        X <= 0 ;
   #15  en = 1'b1;
   #10  en = 1'b0;  
-        X <= 3 ;
+        X <= 0 ;
   #100  en = 1'b1;
   #10  en = 1'b0;  
-        X <= 4 ;
+        X <=  32767 ;
   #100  en = 1'b1;
   #10  en = 1'b0;  
-        X <= 5 ; 
+        X <= 0 ; 
   #100  en = 1'b1;
   #10  en = 1'b0; 
-        X <= 6 ; 
+        X <= 0 ; 
+  #100  en = 1'b1;
+  #10  en = 1'b0; 
   #100  en = 1'b1;
   #10  en = 1'b0;  
+  #100  en = 1'b1;
+  #10  en = 1'b0;  
+  #100  en = 1'b1;
+  #10  en = 1'b0;  
+  #100  en = 1'b1;
+  #10  en = 1'b0;   
   #100 $finish;
 end
 /* Monitor and dump */  
