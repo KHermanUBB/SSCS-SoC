@@ -69,6 +69,11 @@ module top (
   wire [`BUS_WIDTH-1:0] dat_o;
   wire ack_o;
   wire [10:0]  addr;
+
+  wire cond1;
+  wire cond2;
+  reg [31:0] data_o;
+  reg top_ack_o;
   
   assign dat_i = {wbs_dat_i[31], wbs_dat_i[14:0]};
   assign addr = ((wbs_adr_i[10:0] >> 2) - 11'd2);
@@ -86,10 +91,8 @@ module top (
   assign io_oeb[0] = 1'b1;
 
 
-  always@(posedge wb_clk_i) begin
-	if(wb_rst_i) begin
-		valid_i <= 0;
-	end
+  always@(addr  or wb_valid or addr_valid) begin
+
 	if (wb_valid && addr_valid)  begin  
         case(addr[8:4])   
 				 'd0 :  begin  valid_i[0]  <= 1'b1; end  
@@ -102,7 +105,10 @@ module top (
 				 'd7 :  begin  valid_i[7]  <= 1'b1; end 
 				 'd8 :  begin  valid_i[8]  <= 1'b1; end 
 				 'd9 :  begin  valid_i[9]  <= 1'b1; end 
-				 'd10:  begin  valid_i[10] <= 1'b1; end 
+				 'd11:  begin  valid_i[11] <= 1'b1; end 
+				 'd12:  begin  valid_i[12] <= 1'b1; end 
+				 'd13:  begin  valid_i[13] <= 1'b1; end 
+				 'd14:  begin  valid_i[14] <= 1'b1; end 
                   default: begin valid_i <= 0 ;  end
 		endcase
     end
@@ -111,22 +117,17 @@ module top (
   end
 
  
-wire cond1;
-wire cond2;
-reg [31:0] data_o;
-reg top_ack_o;
-wire tmp;
 
 
-
-always@(hi_z) begin 
+/* verify High impedance of the bus*/
+always@(hi_z or dat_o or ack_o) begin 
  
 	if ((&hi_z)) begin
          top_ack_o <= 1'b0;
          data_o  <=  32'b0;
     end 
     else begin 
-       top_ack_o <= 1'b0;
+       top_ack_o <= ack_o;
        data_o    <= {{16{dat_o[15]}},dat_o};
     end    
 
@@ -138,8 +139,10 @@ assign cond1 = (wbs_adr_i[31:28] == 2'b11);
 /* verify top level module addresses 0x3000 0000 and 0x30000004*/
 assign cond2 = ((wbs_adr_i[3:2] == 2'b00) || (wbs_adr_i[3:2] == 2'b01 ));
 /* verify High impedance of the bus*/
-//assign top_ack_o = (&hi_z) ? 1'b0     : 1'b1; //ack_o;
-//assign data_o    = (&hi_z) ? 32'b0    : 32'b0; //{{16{dat_o[15]}},dat_o};
+//wire [31:0] data_o;
+//wire top_ack_o;
+//assign top_ack_o = (&hi_z) ? 1'b0     : ack_o;
+//assign data_o    = (&hi_z) ? 32'b0    : {{16{dat_o[15]}},dat_o};
 
 assign wbs_dat_o =  (cond1 & cond2 )  ?  rdata       :  data_o;
 assign wbs_ack_o =  (cond1 & cond2 )  ?  wbs_done    :  top_ack_o;
