@@ -120,8 +120,12 @@ module top (
 
 
 
-  always@(valid_i or   dat1_o or dat2_o or dat3_o or dat4_o or dat5_o or dat6_o or dat7_o or  dat8_o or dat9_o or dat10_o or  dat11_o or dat12_o or dat13_o or  dat14_o or  dat15_o or   ack1_o or  ack2_o or  ack3_o or ack4_o or ack5_o or ack6_o or  ack7_o or ack8_o or ack9_o or  ack10_o or  ack11_o or ack12_o or  ack13_o or  ack14_o or ack15_o ) begin
-
+  always@(valid_i or dat1_o  or  dat2_o  or dat3_o or dat4_o or dat5_o or dat6_o or dat7_o or dat8_o or dat9_o or dat10_o or dat11_o or dat12_o or dat13_o 
+                  or dat14_o or  dat15_o or 
+                     ack1_o  or  ack2_o  or ack3_o or ack4_o or ack5_o or ack6_o or ack7_o or ack8_o or ack9_o or  ack10_o or ack11_o or ack12_o or ack13_o 
+                  or ack14_o or ack15_o )
+ 
+begin
         case(valid_i)   
 				 'h1     :  begin 
 							wbs_dat <=  dat1_o;
