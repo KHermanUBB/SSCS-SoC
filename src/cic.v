@@ -7,7 +7,7 @@
 `timescale 1ns / 1ps
 
 // =========== Top module START =========== //
-module cic #(parameter N = 16)(
+module cic #(parameter N = 7)(
   input clk, rst, we,
   input              data_in,
   output reg [N-1:0] data_out

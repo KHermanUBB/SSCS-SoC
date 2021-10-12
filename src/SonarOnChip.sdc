@@ -15,18 +15,18 @@ set_input_delay -clock wb_clk_i 0.5  [get_ports wb_valid_i]
 set_input_delay -clock wb_clk_i 0.5  [get_ports wbs_strb_i]
 set_input_delay -clock wb_clk_i 0.5  [get_ports wbs_dat_i*]
 set_input_delay -clock wb_clk_i 0.5  [get_ports wbs_adr_i*]
-set_input_delay -clock wb_clk_i 0.5  [get_ports mclk]
+set_input_delay -clock wb_clk_i 0.5  [get_ports ce_pdm]
 set_input_delay -clock wb_clk_i 0.5  [get_ports ce_pcm]
 set_input_delay -clock wb_clk_i 0.5  [get_ports mclear]
 
 
 set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports pdm_data_i]
 set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports wb_rst_i]
-set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports wbs_valid_i*]
+set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports wb_valid_i*]
 set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports wbs_strb_i*]
 set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports wbs_dat_i*]
 set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports wbs_adr_i*]
-set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports mclk]
+set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports ce_pdm]
 set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports ce_pcm]
 set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports mclear]
 
@@ -34,12 +34,12 @@ set_driving_cell -lib_cell sky130_fd_sc_hd__inv_8  [get_ports mclear]
 set_output_delay -clock wb_clk_i 0.5 [get_ports wbs_ack_o*]
 set_output_delay -clock wb_clk_i 0.5 [get_ports wbs_dat_o*]
 set_output_delay -clock wb_clk_i 0.5 [get_ports cmp]
-set_output_delay -clock wb_clk_i 0.5 [get_ports hi_z]
+
 
 set_load 0.01 [get_ports wbs_ack_o*]
 set_load 0.01 [get_ports wbs_dat_o*]
 set_load 0.01 [get_ports cmp]
-set_load 0.01 [get_ports hi_z]
+
 # --------------------------------- PIN SPECIFIC VALUES----------------------------------------------------
 
 

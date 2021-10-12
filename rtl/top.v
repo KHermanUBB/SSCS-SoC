@@ -106,6 +106,7 @@ module top (
 				 'd7 :  begin  valid_i[7]  <= 1'b1; end 
 				 'd8 :  begin  valid_i[8]  <= 1'b1; end 
 				 'd9 :  begin  valid_i[9]  <= 1'b1; end 
+				 'd10:  begin  valid_i[10] <= 1'b1; end 
 				 'd11:  begin  valid_i[11] <= 1'b1; end 
 				 'd12:  begin  valid_i[12] <= 1'b1; end 
 				 'd13:  begin  valid_i[13] <= 1'b1; end 
@@ -119,8 +120,12 @@ module top (
 
 
 
-  always@(valid_i or   dat1_o or dat2_o or dat3_o or dat4_o or dat5_o or dat6_o or dat7_o or  dat8_o or dat9_o or dat10_o or  dat11_o or dat12_o or dat13_o or  dat14_o or  dat15_o or   ack1_o or  ack2_o or  ack3_o or ack4_o or ack5_o or ack6_o or  ack7_o or ack8_o or ack9_o or  ack10_o or  ack11_o or ack12_o or  ack13_o or  ack14_o or ack15_o ) begin
-
+  always@(valid_i or dat1_o  or  dat2_o  or dat3_o or dat4_o or dat5_o or dat6_o or dat7_o or dat8_o or dat9_o or dat10_o or dat11_o or dat12_o or dat13_o 
+                  or dat14_o or  dat15_o or 
+                     ack1_o  or  ack2_o  or ack3_o or ack4_o or ack5_o or ack6_o or ack7_o or ack8_o or ack9_o or  ack10_o or ack11_o or ack12_o or ack13_o 
+                  or ack14_o or ack15_o )
+ 
+begin
         case(valid_i)   
 				 'h1     :  begin 
 							wbs_dat <=  dat1_o;
@@ -162,7 +167,7 @@ module top (
 							wbs_dat <=  dat10_o;
 							wbs_ack <=  ack10_o;
                             end 
-/*				 'h400   :  begin 
+				 'h400   :  begin 
 							wbs_dat <=  dat11_o;
 							wbs_ack <=  ack11_o;
                             end 
@@ -182,7 +187,7 @@ module top (
 							wbs_dat <=  dat15_o;
 							wbs_ack <=  ack15_o;
                             end 
- */
+
                   default: begin 
 							wbs_dat <=  0;
 							wbs_ack <=  0;
@@ -438,7 +443,7 @@ SonarOnChip   soc10(
     .mclear(mclear),
     .cmp(cmp[9])
 	);
-/*
+
 SonarOnChip   soc11(
 
     .wb_clk_i(wb_clk_i),
