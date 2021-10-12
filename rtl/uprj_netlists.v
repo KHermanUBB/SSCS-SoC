@@ -22,7 +22,6 @@
     `default_nettype wire
     `include "gl/user_project_wrapper.v"
     `include "gl/top.v"
-    `include "../src/SonarOnChip.v"
 `else
     `include "user_project_wrapper.v"
     `include "top.v"

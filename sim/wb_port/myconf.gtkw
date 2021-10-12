@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Oct 12 00:27:58 2021
+[*] Tue Oct 12 22:10:50 2021
 [*]
 [dumpfile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/sim/wb_port/wb_port.vcd"
-[dumpfile_mtime] "Tue Oct 12 00:20:41 2021"
-[dumpfile_size] 625693457
+[dumpfile_mtime] "Tue Oct 12 18:26:29 2021"
+[dumpfile_size] 413112892
 [savefile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/sim/wb_port/myconf.gtkw"
-[timestart] 237023000
+[timestart] 231826000
 [size] 1916 1041
 [pos] -1 -1
-*-17.632885 237687500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-20.632885 239562500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] wb_port_tb.
 [treeopen] wb_port_tb.uut.
 [treeopen] wb_port_tb.uut.mprj.
@@ -22,16 +22,14 @@
 [treeopen] wb_port_tb.uut.soc.soc.soc_mem.mem.
 [treeopen] wb_port_tb.uut.soc.soc.soc_mem.mem.SRAM.
 [sst_width] 297
-[signals_width] 214
+[signals_width] 366
 [sst_expanded] 1
 [sst_vpaned_height] 473
 @22
 wb_port_tb.uut.mprj.SoCTopModule.soc1.a0[15:0]
 wb_port_tb.uut.mprj.SoCTopModule.soc1.control[15:0]
-wb_port_tb.uut.mprj.SoCTopModule.soc1.amp[15:0]
 wb_port_tb.uut.mprj.SoCTopModule.soc1.pcm_load[15:0]
 wb_port_tb.uut.mprj.SoCTopModule.soc1.pcm[15:0]
-wb_port_tb.uut.mprj.SoCTopModule.soc1.threshold[31:0]
 wb_port_tb.uut.mprj.SoCTopModule.soc1.timer[31:0]
 @28
 wb_port_tb.uut.mprj.SoCTopModule.soc1.cmp
@@ -39,7 +37,6 @@ wb_port_tb.uut.mprj.SoCTopModule.soc1.clear
 wb_port_tb.uut.mprj.SoCTopModule.soc1.ce_pcm
 @22
 wb_port_tb.uut.mprj.SoCTopModule.dat_i[15:0]
-wb_port_tb.uut.mprj.SoCTopModule.dat_o[15:0]
 wb_port_tb.uut.mprj.SoCTopModule.adr_i[3:0]
 wb_port_tb.uut.mprj.SoCTopModule.wbs_adr_i[31:0]
 @28
@@ -58,25 +55,14 @@ wb_port_tb.uut.mprj.SoCTopModule.wbs_stb_i
 wb_port_tb.uut.mprj.SoCTopModule.wbs_cyc_i
 @22
 wb_port_tb.uut.mprj.SoCTopModule.wbs_adr_i[31:0]
-@800023
-wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
+@800200
+-wb_port_tb.uut.mprj.SoCTopModule.valid_i
+@28
+wb_port_tb.uut.mprj.SoCTopModule.ce_pcm
+wb_port_tb.uut.mprj.SoCTopModule.ce_pdm
 @29
-(0)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(1)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(2)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(3)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(4)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(5)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(6)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(7)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(8)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(9)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(10)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(11)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(12)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(13)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-(14)wb_port_tb.uut.mprj.SoCTopModule.valid_i[14:0]
-@1001201
+wb_port_tb.uut.mprj.SoCTopModule.mclk
+@1001200
 -group_end
 [pattern_trace] 1
 [pattern_trace] 0

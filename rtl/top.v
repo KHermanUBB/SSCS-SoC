@@ -65,11 +65,8 @@ module top (
   wire [3:0] adr_i;
   wire [`BUS_WIDTH-1:0] dat_i;
   wire [10:0]  addr;
-
-  wire cond1;
-  wire cond2;
   
-  wire [`BUS_WIDTH-1:0] dat1_o, dat2_o, dat3_o, dat4_o, dat5_o, dat6_o, dat7_o, dat8_o, dat9_o, dat10_o, dat11_o, dat12_o, dat13_o, dat14_o, dat15_o ;
+  wire [`BUS_WIDTH-1:0] dat1_o, dat2_o, dat3_o, dat4_o, dat5_o, dat6_o, dat7_o, dat8_o, dat9_o, dat10_o, dat11_o, dat12_o, dat13_o, dat14_o, dat15_o;
   wire                  ack1_o, ack2_o, ack3_o, ack4_o, ack5_o, ack6_o, ack7_o, ack8_o, ack9_o, ack10_o, ack11_o, ack12_o, ack13_o, ack14_o, ack15_o;
 
   reg [`BUS_WIDTH-1:0] wbs_dat;
@@ -199,11 +196,6 @@ assign wbs_dat_o =   (valid_i != 0)  ? {{16{wbs_dat[15]}},wbs_dat} : rdata;
 assign wbs_ack_o =   (valid_i != 0)  ? wbs_ack                     : wbs_done;
 
 
-/* verify slave address 0x3000 0000 scope*/
-assign cond1 = (wbs_adr_i[31:28] == 2'b11);
-/* verify top level module addresses 0x3000 0000 and 0x30000004*/
-assign cond2 = ((wbs_adr_i[3:2] == 2'b00) || (wbs_adr_i[3:2] == 2'b01 ));
-/* verify High impedance of the bus*/
 
 
 	always@(posedge wb_clk_i) begin
