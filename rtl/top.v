@@ -1,4 +1,3 @@
-
 `include "defines.v"
 
 `define MAX_SOC 15
@@ -25,8 +24,8 @@ module top (
     input [3:0] wbs_sel_i,
     input [31:0] wbs_dat_i,
     input [31:0] wbs_adr_i,
-    output wbs_ack_o,
-    output [31:0] wbs_dat_o,
+    output  wbs_ack_o,
+    output  [31:0] wbs_dat_o,
 
     // Logic Analyzer Signals
     input  [127:0] la_data_in,
@@ -54,7 +53,6 @@ module top (
 
 
   wire  [`MAX_SOC-1:0] cmp;
-  wire [`MAX_SOC-1:0] hi_z;
   wire mclear;
   wire mclk;
   wire ce_pcm;
@@ -62,25 +60,28 @@ module top (
   wire addr_valid;
 
 
-  reg [`MAX_SOC-1:0] valid_i;
+  reg [15:0] valid_i;
   wire  strb_i;
   wire [3:0] adr_i;
   wire [`BUS_WIDTH-1:0] dat_i;
-  wire [`BUS_WIDTH-1:0] dat_o;
-  wire ack_o;
   wire [10:0]  addr;
 
   wire cond1;
   wire cond2;
-  reg [31:0] data_o;
-  reg top_ack_o;
   
+  wire [`BUS_WIDTH-1:0] dat1_o, dat2_o, dat3_o, dat4_o, dat5_o, dat6_o, dat7_o, dat8_o, dat9_o, dat10_o, dat11_o, dat12_o, dat13_o, dat14_o, dat15_o ;
+  wire                  ack1_o, ack2_o, ack3_o, ack4_o, ack5_o, ack6_o, ack7_o, ack8_o, ack9_o, ack10_o, ack11_o, ack12_o, ack13_o, ack14_o, ack15_o;
+
+  reg [`BUS_WIDTH-1:0] wbs_dat;
+  reg wbs_ack;
+
+
   assign dat_i = {wbs_dat_i[31], wbs_dat_i[14:0]};
   assign addr = ((wbs_adr_i[10:0] >> 2) - 11'd2);
   assign adr_i = addr[3:0];
   assign strb_i = wstrb[0];
 
-  assign wbs_ack_o = wbs_done;	
+
   assign wb_valid = wbs_cyc_i && wbs_stb_i; 
   assign wstrb = wbs_sel_i & {4{wbs_we_i}};
   assign addr_valid = (wbs_adr_i[31:28] == 3) ? 1 : 0;
@@ -116,22 +117,81 @@ module top (
       valid_i <= 0;
   end
 
- 
 
 
-/* verify High impedance of the bus*/
-always@(hi_z or dat_o or ack_o) begin 
- 
-	if ((&hi_z)) begin
-         top_ack_o <= 1'b0;
-         data_o  <=  32'b0;
-    end 
-    else begin 
-       top_ack_o <= ack_o;
-       data_o    <= {{16{dat_o[15]}},dat_o};
-    end    
+  always@(valid_i or   dat1_o or dat2_o or dat3_o or dat4_o or dat5_o or dat6_o or dat7_o or  dat8_o or dat9_o or dat10_o or  dat11_o or dat12_o or dat13_o or  dat14_o or  dat15_o or   ack1_o or  ack2_o or  ack3_o or ack4_o or ack5_o or ack6_o or  ack7_o or ack8_o or ack9_o or  ack10_o or  ack11_o or ack12_o or  ack13_o or  ack14_o or ack15_o ) begin
 
-end 
+        case(valid_i)   
+				 'h1     :  begin 
+							wbs_dat <=  dat1_o;
+							wbs_ack <=  ack1_o;
+                            end
+				 'h2     :  begin 
+							wbs_dat <=  dat2_o;
+							wbs_ack <=  ack2_o;
+                            end
+				 'h4     :  begin 
+							wbs_dat <=  dat3_o;
+							wbs_ack <=  ack3_o;
+                            end
+				 'h8     :  begin 
+							wbs_dat <=  dat4_o;
+							wbs_ack <=  ack4_o;
+                            end
+				 'h10    :  begin 
+							wbs_dat <=  dat5_o;
+							wbs_ack <=  ack5_o;
+                            end
+				 'h20    :  begin 
+							wbs_dat <=  dat6_o;
+							wbs_ack <=  ack6_o;
+                            end
+				 'h40    :  begin 
+							wbs_dat <=  dat7_o;
+							wbs_ack <=  ack7_o;
+                            end 
+				 'h80    :  begin 
+							wbs_dat <=  dat8_o;
+							wbs_ack <=  ack8_o;
+                            end 
+				 'h100   :  begin 
+							wbs_dat <=  dat9_o;
+							wbs_ack <=  ack9_o;
+                            end 
+				 'h200   :  begin 
+							wbs_dat <=  dat10_o;
+							wbs_ack <=  ack10_o;
+                            end 
+/*				 'h400   :  begin 
+							wbs_dat <=  dat11_o;
+							wbs_ack <=  ack11_o;
+                            end 
+				 'h800   :  begin 
+							wbs_dat <=  dat12_o;
+							wbs_ack <=  ack12_o;
+                            end 
+				 'h1000  :  begin 
+							wbs_dat <=  dat13_o;
+							wbs_ack <=  ack13_o;
+                            end 
+				 'h2000  :  begin 
+							wbs_dat <=  dat14_o;
+							wbs_ack <=  ack14_o;
+                            end
+				 'h4000  :  begin 
+							wbs_dat <=  dat15_o;
+							wbs_ack <=  ack15_o;
+                            end 
+ */
+                  default: begin 
+							wbs_dat <=  0;
+							wbs_ack <=  0;
+                           end
+		endcase
+  end
+
+assign wbs_dat_o =   (valid_i != 0)  ? {{16{wbs_dat[15]}},wbs_dat} : rdata;
+assign wbs_ack_o =   (valid_i != 0)  ? wbs_ack                     : wbs_done;
 
 
 /* verify slave address 0x3000 0000 scope*/
@@ -139,13 +199,7 @@ assign cond1 = (wbs_adr_i[31:28] == 2'b11);
 /* verify top level module addresses 0x3000 0000 and 0x30000004*/
 assign cond2 = ((wbs_adr_i[3:2] == 2'b00) || (wbs_adr_i[3:2] == 2'b01 ));
 /* verify High impedance of the bus*/
-//wire [31:0] data_o;
-//wire top_ack_o;
-//assign top_ack_o = (&hi_z) ? 1'b0     : ack_o;
-//assign data_o    = (&hi_z) ? 32'b0    : {{16{dat_o[15]}},dat_o};
 
-assign wbs_dat_o =  (cond1 & cond2 )  ?  rdata       :  data_o;
-assign wbs_ack_o =  (cond1 & cond2 )  ?  wbs_done    :  top_ack_o;
 
 	always@(posedge wb_clk_i) begin
 		if(wb_rst_i) begin
@@ -213,15 +267,14 @@ SonarOnChip   soc1(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack1_o),
+    .wbs_dat_o(dat1_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[1]),
     .mclear(mclear),
-    .cmp(cmp[0]),
-    .hi_z(hi_z[0])
+    .cmp(cmp[0])
 	);
 
 SonarOnChip   soc2(
@@ -232,15 +285,14 @@ SonarOnChip   soc2(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack2_o),
+    .wbs_dat_o(dat2_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[2]),
     .mclear(mclear),
-    .cmp(cmp[1]),
-    .hi_z(hi_z[1])
+    .cmp(cmp[1])
 	);
 
 SonarOnChip   soc3(
@@ -251,15 +303,14 @@ SonarOnChip   soc3(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack3_o),
+    .wbs_dat_o(dat3_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[3]),
     .mclear(mclear),
-    .cmp(cmp[2]),
-    .hi_z(hi_z[2])
+    .cmp(cmp[2])
 	);
 
 SonarOnChip   soc4(
@@ -270,15 +321,14 @@ SonarOnChip   soc4(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack4_o),
+    .wbs_dat_o(dat4_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[4]),
     .mclear(mclear),
-    .cmp(cmp[3]),
-    .hi_z(hi_z[3])
+    .cmp(cmp[3])
 	);
 
 SonarOnChip   soc5(
@@ -289,15 +339,14 @@ SonarOnChip   soc5(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack5_o),
+    .wbs_dat_o(dat5_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[5]),
     .mclear(mclear),
-    .cmp(cmp[4]),
-    .hi_z(hi_z[4])
+    .cmp(cmp[4])
 	);
 
 SonarOnChip   soc6(
@@ -308,15 +357,14 @@ SonarOnChip   soc6(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack6_o),
+    .wbs_dat_o(dat6_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[6]),
     .mclear(mclear),
-    .cmp(cmp[5]),
-    .hi_z(hi_z[5])
+    .cmp(cmp[5])
 	);
 
 SonarOnChip   soc7(
@@ -327,15 +375,14 @@ SonarOnChip   soc7(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack7_o),
+    .wbs_dat_o(dat7_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[7]),
     .mclear(mclear),
-    .cmp(cmp[6]),
-    .hi_z(hi_z[6])
+    .cmp(cmp[6])
 	);
 
 SonarOnChip   soc8(
@@ -346,15 +393,14 @@ SonarOnChip   soc8(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack8_o),
+    .wbs_dat_o(dat8_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[8]),
     .mclear(mclear),
-    .cmp(cmp[7]),
-    .hi_z(hi_z[7])
+    .cmp(cmp[7])
 	);
 
 SonarOnChip   soc9(
@@ -365,15 +411,14 @@ SonarOnChip   soc9(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack9_o),
+    .wbs_dat_o(dat9_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[9]),
     .mclear(mclear),
-    .cmp(cmp[8]),
-    .hi_z(hi_z[8])
+    .cmp(cmp[8])
 	);
 
 SonarOnChip   soc10(
@@ -384,17 +429,16 @@ SonarOnChip   soc10(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack10_o),
+    .wbs_dat_o(dat10_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[10]),
     .mclear(mclear),
-    .cmp(cmp[9]),
-    .hi_z(hi_z[9])
+    .cmp(cmp[9])
 	);
-
+/*
 SonarOnChip   soc11(
 
     .wb_clk_i(wb_clk_i),
@@ -403,15 +447,14 @@ SonarOnChip   soc11(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack11_o),
+    .wbs_dat_o(dat11_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[11]),
     .mclear(mclear),
-    .cmp(cmp[10]),
-    .hi_z(hi_z[10])
+    .cmp(cmp[10])
 	);
 
 SonarOnChip   soc12(
@@ -422,15 +465,14 @@ SonarOnChip   soc12(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack12_o),
+    .wbs_dat_o(dat12_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[12]),
     .mclear(mclear),
-    .cmp(cmp[11]),
-    .hi_z(hi_z[11])
+    .cmp(cmp[11])
 	);
 
 SonarOnChip   soc13(
@@ -441,15 +483,14 @@ SonarOnChip   soc13(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack13_o),
+    .wbs_dat_o(dat13_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[13]),
     .mclear(mclear),
-    .cmp(cmp[12]),
-    .hi_z(hi_z[12])
+    .cmp(cmp[12])
 	);
 
 
@@ -461,15 +502,14 @@ SonarOnChip   soc14(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack14_o),
+    .wbs_dat_o(dat14_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[14]),
     .mclear(mclear),
-    .cmp(cmp[13]),
-    .hi_z(hi_z[13])
+    .cmp(cmp[13])
 	);
 
 SonarOnChip   soc15(
@@ -480,19 +520,17 @@ SonarOnChip   soc15(
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack15_o),
+    .wbs_dat_o(dat15_o),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[15]),
     .mclear(mclear),
-    .cmp(cmp[14]),
-    .hi_z(hi_z[14])
+    .cmp(cmp[14])
 	);
 /*
 SonarOnChip   soc16(
-
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
     .wb_valid_i(valid_i[15]),
@@ -506,12 +544,9 @@ SonarOnChip   soc16(
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[16]),
     .mclear(mclear),
-    .cmp(cmp[15]),
-    .hi_z(hi_z[15])
+    .cmp(cmp[15])
 	);
-
 SonarOnChip   soc17(
-
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
     .wb_valid_i(valid_i[16]),
@@ -525,8 +560,7 @@ SonarOnChip   soc17(
     .ce_pcm(ce_pcm),
     .pdm_data_i(io_in[17]),
     .mclear(mclear),
-    .cmp(cmp[16]),
-    .hi_z(hi_z[16])
+    .cmp(cmp[16])
 	);
 */
 

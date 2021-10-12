@@ -22,11 +22,11 @@ add_macro_placement soc7 100 1250 N
 add_macro_placement soc8 100 1450 N
 add_macro_placement soc9 100 1650 N
 add_macro_placement soc10 100 1850 N
-add_macro_placement soc11 100 2050 N
-add_macro_placement soc12 100 2250 N
-add_macro_placement soc13 100 2450 N
-add_macro_placement soc14 100 2650 N
-add_macro_placement soc15 100 2850 N
+#add_macro_placement soc11 100 2050 N
+#add_macro_placement soc12 100 2250 N
+#add_macro_placement soc13 100 2450 N
+#add_macro_placement soc14 100 2650 N
+#add_macro_placement soc15 100 2850 N
 
 
 

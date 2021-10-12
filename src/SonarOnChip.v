@@ -44,9 +44,7 @@ module SonarOnChip
     /* Master clear */
     input wire  mclear,
     /* compare otupt signal*/    
-    output wire  cmp,
-    /* indicates Hi-Z of the WB*/
-    output wire  hi_z
+    output wire  cmp
 	);
 
 
@@ -124,9 +122,9 @@ module SonarOnChip
 
   reg [2*`BUS_WIDTH-1:0] rdata;
 
-  assign wbs_ack_o = wb_valid_i ? wbs_done : 1'bz;
-  assign wbs_dat_o = wb_valid_i ? rdata : 32'bz;
-  assign hi_z      = wb_valid_i ? 0 : 1;
+  assign wbs_ack_o =  wbs_done; 
+  assign wbs_dat_o =  rdata;
+
   
   assign clk = wb_clk_i;
   assign rst = wb_rst_i;
