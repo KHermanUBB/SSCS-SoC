@@ -12,23 +12,21 @@ init_floorplan
 place_io
 
 
-add_macro_placement soc1 100 50 N
-add_macro_placement soc2 100 250 N
-add_macro_placement soc3 100 450 N
-add_macro_placement soc4 100 650 N
-add_macro_placement soc5 100 850 N
-add_macro_placement soc6 100 1050 N
-add_macro_placement soc7 100 1250 N
-add_macro_placement soc8 100 1450 N
-add_macro_placement soc9 100 1650 N
-add_macro_placement soc10 100 1850 N
-#add_macro_placement soc11 100 2050 N
-#add_macro_placement soc12 100 2250 N
-#add_macro_placement soc13 100 2450 N
-#add_macro_placement soc14 100 2650 N
-#add_macro_placement soc15 100 2850 N
-
-
+add_macro_placement soc1   100 50 N
+add_macro_placement soc2   100 250 N
+add_macro_placement soc3   100 450 N
+add_macro_placement soc4   100 650 N
+add_macro_placement soc5   100 850 N
+add_macro_placement soc6   100 1050 N
+add_macro_placement soc7   100 1250 N
+add_macro_placement soc8   100 1450 N
+add_macro_placement soc9   100 1650 N
+add_macro_placement soc10  100 1850 N
+add_macro_placement soc11  100 2050 N
+add_macro_placement soc12  100 2250 N
+add_macro_placement soc13  100 2450 N
+add_macro_placement soc14  100 2650 N
+add_macro_placement soc15  100 2850 N
 
 manual_macro_placement f
 
@@ -52,20 +50,4 @@ save_views       -lef_path $::env(magic_result_file_tag).lef \
                  -tag $::env(RUN_TAG)
 #run_magic_drc
 #run_lvs; # requires run_magic_spice_export
-#run_antenna_check
-     #add_macro_placement soc3  100 360  N
-#add_macro_placement soc4  100 540  N
-#add_macro_placement soc5  100 720  N
-#add_macro_placement soc6  100 900  N
-#add_macro_placement soc7  100 1080 N
-#add_macro_placement soc8  100 1260 N
-#add_macro_placement soc9  100 1440 N
-#add_macro_placement soc10 100 1620 N
-#add_macro_placement soc11 100 1800 N
-#add_macro_placement soc12 100 1980 N
-#add_macro_placement soc13 100 2160 N
-#add_macro_placement soc14 100 2340 N
-#add_macro_placement soc15 100 2520 N
-#add_macro_placement soc16 100 2700 N
-#add_macro_placement soc17 100 2880 N
-#add_macro_placement soc1 100 3060 N           
+#run_antenna_check        
