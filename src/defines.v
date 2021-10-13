@@ -19,6 +19,8 @@
 // Global parameters
 `define __GLOBAL_DEFINE_H
 
+
+
 `define MPRJ_IO_PADS_1 19	/* number of user GPIO pads on user1 side */
 `define MPRJ_IO_PADS_2 19	/* number of user GPIO pads on user2 side */
 `define MPRJ_IO_PADS (`MPRJ_IO_PADS_1 + `MPRJ_IO_PADS_2)
