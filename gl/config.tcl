@@ -16,6 +16,7 @@ set ::env(DIE_AREA) "0 0 2920 3520"
 set ::env(DESIGN_IS_CORE) 0
 
 set ::env(SYNTH_FLAT_TOP) 1
+set ::env(SYNTH_NO_FLAT) 1
 set ::env(PL_SKIP_INITIAL_PLACEMENT) 
 set ::env(PL_TARGET_DENSITY) 0.58
 #set ::env(PL_TARGET_DENSITY) 0.4
