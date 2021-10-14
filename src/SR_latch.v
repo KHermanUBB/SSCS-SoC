@@ -1,4 +1,10 @@
-module SR_latch(input clk, input rst, input r, input s, output reg q, output reg qbar); 
+module SR_latch(
+	input clk, 
+	input rst, 
+	input r, 
+	input s, 
+	output reg q, 
+	output reg qbar); 
 
 
 always@(posedge clk) begin

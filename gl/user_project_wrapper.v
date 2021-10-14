@@ -82,19 +82,15 @@ module user_project_wrapper #(
 /* User project is instantiated  here   */
 /*--------------------------------------*/
 
-
-
-
-
 top  SoCTopModule(
 
-
+    .VGND(vssd1),
+    .VPWR(vccd1),
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
 
     // MGMT SoC Wishbone Slave
 
-    .wbs_cyc_i(wbs_cyc_i),
     .wbs_stb_i(wbs_stb_i),
     .wbs_we_i(wbs_we_i),
     .wbs_sel_i(wbs_sel_i),

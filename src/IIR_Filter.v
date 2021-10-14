@@ -8,27 +8,30 @@ module IIR_Filter
     input wire clk,
     input wire rst,
     input wire en,
-    input wire [N-1:0] X,
-    input wire [N-1:0] a0,
-    input wire [N-1:0] a1,
-    input wire [N-1:0] a2,
-    input wire [N-1:0] b1,
-    input wire [N-1:0] b2,
-    output  [N-1:0] Y);
+    input wire signed [N-1:0] X,
+    input wire signed [N-1:0] a0,
+    input wire signed [N-1:0] a1,
+    input wire signed [N-1:0] a2,
+    input wire signed [N-1:0] b1,
+    input wire signed [N-1:0] b2,
+    output wire signed  [N-1:0] Y);
   
-  reg [N-1:0] X1, X2, X3;
-  reg [N-1:0] Y1, Y2;
-  reg [N-1:0] Yt;
+  reg signed [N-1:0] X1, X2, X3;
+  reg signed [N-1:0] Y1, Y2;
+  reg signed [N-1:0] Yt;
+  wire  signed [2*N-1:0] prod; 
   
   reg [2:0] phase;
   reg cycle_valid;
   
-  reg [N-1:0] coeff;
-  reg [N-1:0] samplevalue;
-  reg [N-1:0] result; 
+  reg signed [N-1:0] coeff;
+  reg signed [N-1:0] samplevalue;
+  reg signed [N-1:0] result; 
+
 
   assign Y = Yt; 
-  
+  assign prod = (samplevalue*coeff) >>> 15;
+
   always@(phase or X1 or X2 or X3 or Y1 or Y2 ) begin
 
 	if (phase == 3'b000) begin

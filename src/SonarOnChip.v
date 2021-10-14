@@ -67,60 +67,44 @@ module SonarOnChip
   wire clk;
   wire rst;
   wire we_pcm;  
-
    /* Compare module wires*/
   wire [`BUS_WIDTH-1:0] maf_o;
   wire compare_out;
- 
   /* PCM inputs from GPIO, will come from PDM */	
   wire [`BUS_WIDTH-1:0] pcm_reg_i;
-	//assign pcm_reg_i = io_in[`BUS_WIDTH-1:0];
-
   /* PCM register output signal*/
   wire [`BUS_WIDTH-1:0] pcm_reg_o;
-
-  /* 32 - bit sign extended pcm value */
-  //wire [`BUS_WIDTH-1:0] pcm32, pcm32abs;
-
   wire [`BUS_WIDTH-1:0] pcm_abs;
-
-  /* clock enable wiring*/
-  wire ce;
   /* Multiplier  output */
   wire [`BUS_WIDTH-1:0] mul_o;
-  
  /** Wishbone Slave Interface **/
   reg wbs_done;
   wire wb_valid;
   wire [3:0] wstrb;
-
   reg [`BUS_WIDTH-1:0] control;
   reg [7:0] amp;
   reg signed [`BUS_WIDTH-1:0] pcm;
   reg signed [`BUS_WIDTH-1:0] pcm_load;
   reg [2*`BUS_WIDTH-1:0] timer;
-
   //---- IIR COEFF ---- //
   reg signed [`BUS_WIDTH-1:0] a0;
   reg signed [`BUS_WIDTH-1:0] a1;
   reg signed [`BUS_WIDTH-1:0] a2;
   reg signed [`BUS_WIDTH-1:0] b1;
   reg signed [`BUS_WIDTH-1:0] b2;
-  
 	//---- FIR COEFF ---- //
   reg signed [`BUS_WIDTH-1:0] fb0;
   reg signed [`BUS_WIDTH-1:0] fb1;
   reg [`BUS_WIDTH-1:0] threshold;
- 
-
-
-  wire clear;
   wire timer_we;
   wire srlatchQ;
   wire srlatchQbar;
-  wire addr_valid;
-
   reg [`BUS_WIDTH-1:0] rdata;
+  wire [11:0] cic_out;
+  wire [`BUS_WIDTH-1:0] fir_out;
+  wire [`BUS_WIDTH-1:0] fir_in;
+  wire  [`BUS_WIDTH-1:0] mul_i;
+  wire  [`BUS_WIDTH-1:0] iir_data;
 
   assign wbs_ack_o = wbs_done;
   assign wbs_dat_o =  rdata;
@@ -135,19 +119,19 @@ module SonarOnChip
 
 	always@(posedge clk) begin
 		if(rst) begin
-            wbs_done <= 0;
-			a0 <= 0;
-			a1 <= 0;
-			a2 <= 0;
-			b1 <= 0;
-			b2 <= 0;
-			fb0 <= 0;
-			fb1 <= 0;
-            amp <= 0;
-            threshold <= 0;
-            control <= 0;
-		    pcm_load <= 0;
-            rdata <= 0;
+    wbs_done <= 0;
+		a0 <= 0;
+		a1 <= 0;
+		a2 <= 0;
+		b1 <= 0;
+		b2 <= 0;
+		fb0 <= 0;
+		fb1 <= 0;
+    amp <= 0;
+    threshold <= 0;
+    control <= 0;
+		pcm_load <= 0;
+    rdata <= 0;
 
 		end
 		else begin
@@ -229,20 +213,14 @@ module SonarOnChip
                    		if(wbs_strb_i)
        						threshold <= wbs_dat_i;
                         end
-                    default: begin  rdata <= 0; end
+                    default:   rdata <= 0; 
 				endcase
                 wbs_done  <= 1;
 			end
 		end
    end 
   
-/* pcm register block */
-  always@(posedge clk) begin
-  	if(rst) 
-		pcm <= 0;
-    else if (we_pcm)
-        pcm <= pcm_reg_i;
-  end
+
 
 /* timer register block */
 /*-----------------------------------------------------------------------------*/
@@ -250,13 +228,12 @@ module SonarOnChip
     begin
       if (rst)
             timer <= 0;
-        else if (clear)
+        else if (mclear)
             timer <= 0;
         else if (timer_we)
             timer <= timer + 1'b1;
     end
 
-assign  clear  = mclear;
 assign  timer_we = we_pcm & (srlatchQbar); 
 /*-----------------------------------------------------------------------------*/
 
@@ -268,24 +245,29 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
   
   /*------------------------  PDM starts   -----------------------------------*/
  
-
-
-  wire [`BUS_WIDTH-1:0] cic_out;
-
   cic  cicmodule(clk, rst, ce_pdm, pdm_data_i, cic_out);
 
   /*------------------------   PDM ends    -----------------------------------*/
   
   /*------------------------   FIR start    -----------------------------------*/
-  
-  wire [`BUS_WIDTH-1:0] fir_out;
-  FIR_Filter fir_filter(clk, rst, we_pcm, cic_out, fb0, fb1, fir_out);
+
+ /* extend the 12 bit signal from PDM demodulator to 16 bit*/
+  assign fir_in = {{4{cic_out[11]}}, cic_out };
+  FIR_Filter fir_filter(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out);
   
   /*------------------------   FIR ends    -----------------------------------*/
   
   /*------------------------  PCM starts   -----------------------------------*/
   
   assign pcm_reg_i = control[4] ? pcm_load :fir_out;
+
+/* pcm register block */
+  always@(posedge clk) begin
+  	if(rst) 
+		pcm <= 0;
+    else if (we_pcm)
+        pcm <= pcm_reg_i;
+  end
   assign pcm_reg_o = pcm;
   
   /*------------------------   PCM ends    -----------------------------------*/
@@ -295,14 +277,10 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
   /*------------------------   SE ends    -----------------------------------*/
   
   /*------------------------  MUL starts   -----------------------------------*/
-	wire  [`BUS_WIDTH-1:0] mul_i;
-	wire  [`BUS_WIDTH-1:0]iir_data;
-	assign mul_i = control[3] ? pcm : iir_data; 
-
-  MULTI mul(mul_i, amp, mul_o);
+  assign mul_i = control[3] ? pcm : iir_data; 
+  multiplier mul(mul_i, amp, mul_o);
   /*------------------------   MUL ends    -----------------------------------*/
-  
-  
+    
   /*------------------------  ABS starts   -----------------------------------*/
   Abs  abs(mul_o, pcm_abs);
   /*------------------------   ABS ends    -----------------------------------*/
@@ -330,7 +308,7 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
   
   comparator comp(maf_o, threshold, compare_out);
   
-  SR_latch sr(clk, rst, clear, compare_out, srlatchQ, srlatchQbar);
+  SR_latch sr(clk, rst, mclear, compare_out, srlatchQ, srlatchQbar);
   assign cmp = srlatchQ;
   
   /*------------------------   COMP ends    ----------------------------------*/

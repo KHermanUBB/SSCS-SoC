@@ -1,14 +1,14 @@
 set script_dir [file dirname [file normalize [info script]]]
 # User config
-set ::env(DESIGN_NAME) Abs
+set ::env(DESIGN_NAME) cic
 
 # Change if needed
 set ::env(VERILOG_FILES) [glob $::env(DESIGN_DIR)/src/*.v]
 
 # Fill this
 set ::env(CLOCK_PERIOD) "40"
-set ::env(CLOCK_PORT) "wb_clk_i"
-set ::env(CLOCK_NET) "wb_clk_i"
+set ::env(CLOCK_PORT) "clk"
+set ::env(CLOCK_NET) "clk"
 set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 2920 3520"
 set ::env(DIE_AREA) "0 0 1000 150"

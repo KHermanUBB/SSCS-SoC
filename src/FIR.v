@@ -1,4 +1,3 @@
-`timescale 1ns / 1ps
 /*
 ============ FIR filter ====================
 */
@@ -8,12 +7,12 @@ module FIR_Filter
     input         clk,
     input         rst,
     input         en,
-    input [N-1:0] X,
-    input [N-1:0] b0,
-    input [N-1:0] b1,
-    output [N-1:0]   Y);
+    input  signed [N-1:0] X,
+    input  signed [N-1:0] b0,
+    input  signed [N-1:0] b1,
+    output signed [N-1:0]   Y);
   
-   reg signed [N-1:0] X1, X2, X3, X4;
+  reg signed [N-1:0] X1, X2, X3, X4;
   reg [2:0] phase;
   wire muxsel;
   reg cycle_valid;
@@ -33,13 +32,13 @@ module FIR_Filter
   always@(phase or X1 or X2 or X3 or X4) begin
 
 	if (phase == 2'b00)
-         samplevalue <= X1; 
+        samplevalue <= X1; 
    	else if (phase == 2'b01)
-         samplevalue <= X2;
+        samplevalue <= X2;
    	else if (phase == 2'b10)
-         samplevalue <= X3;
+        samplevalue <= X3;
    	else if (phase == 2'b11)
-			samplevalue <= X4;
+   			samplevalue <= X4;
     else
          samplevalue <= 0;
   end
@@ -67,11 +66,11 @@ module FIR_Filter
   always@(posedge clk) begin
     if(rst ==1'b1) 
     begin
-		result <= 0;
+  		result <= 0;
     end
     else begin
     if(cycle_valid)  
-		result <= result + prod;
+	    	result <= result + prod;
     if(phase == 3'b101)
         result <= 0;
     end
@@ -81,22 +80,22 @@ module FIR_Filter
    always@(posedge clk) begin
     if(rst ==1'b1) 
     begin
-		phase <= 0;
+		  phase <= 0;
     end
     else if(cycle_valid)
        	phase <= phase + 1;
 
 end
 
-/*phase of the computation*/
+/* cycle valid*/
    always@(posedge clk) begin
     if(rst ==1'b1) 
 		cycle_valid <= 0;
     else if(en == 1'b1) 
          cycle_valid <= 1;
-    else if(phase == 3'b011) begin
+    else if(phase == 3'b011) 
          cycle_valid <= 0;
-         end
+         
   end
 
 endmodule

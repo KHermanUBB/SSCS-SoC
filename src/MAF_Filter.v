@@ -27,7 +27,7 @@ module MAF_FILTER
 
 wire [16-1:0] connect_wire[4:0]; //wires for interconnect DFFs
 wire [16-1:0] connect_wire_adder[4-2:0]; // wires for interconnect adders
-  wire [16-1:0] connect_wire_shifter[1:0]; // wires for interconnect last adder with 2er
+wire [16-1:0] connect_wire_shifter[1:0]; // wires for interconnect last adder with 2er
 
 assign data_out = connect_wire_shifter[0];  //out of the desig will be out of 2er!
 assign connect_wire[0] = data_in;
