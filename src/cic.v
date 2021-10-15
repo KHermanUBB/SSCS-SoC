@@ -37,7 +37,6 @@ module cic #(parameter N =- 2)(
    assign ff1_last = ff1[`OverSample-1];
    assign ffext1 =  {{5{ff1_last[1]}}, ff1_last };
    assign sum1 = dinext1-ffext1;
-   assign data_out1 = ff1out;
 
 
    assign dinext2 =  {{5{ff1out[6]}},ff1out};

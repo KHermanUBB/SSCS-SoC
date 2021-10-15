@@ -1,0 +1,39 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Sun Oct 10 18:33:06 2021
+[*]
+[dumpfile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/test/dump.vcd"
+[dumpfile_mtime] "Sun Oct 10 18:15:56 2021"
+[dumpfile_size] 6110
+[savefile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/test/iir.gtkw"
+[timestart] 0
+[size] 1916 1041
+[pos] -1 -1
+*-47.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] Filter_behavioral_tb.
+[sst_width] 213
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 307
+@25
+Filter_behavioral_tb.a0[15:0]
+Filter_behavioral_tb.a1[15:0]
+Filter_behavioral_tb.a2[15:0]
+Filter_behavioral_tb.b0[15:0]
+Filter_behavioral_tb.b1[15:0]
+Filter_behavioral_tb.clk
+Filter_behavioral_tb.rst
+Filter_behavioral_tb.en
+Filter_behavioral_tb.X[15:0]
+Filter_behavioral_tb.Yir[15:0]
+Filter_behavioral_tb.iir.X1[15:0]
+Filter_behavioral_tb.iir.X2[15:0]
+Filter_behavioral_tb.iir.X3[15:0]
+Filter_behavioral_tb.iir.Y1[15:0]
+Filter_behavioral_tb.iir.Y2[15:0]
+Filter_behavioral_tb.iir.result[15:0]
+Filter_behavioral_tb.iir.phase[2:0]
+Filter_behavioral_tb.iir.samplevalue[15:0]
+Filter_behavioral_tb.iir.coeff[15:0]
+[pattern_trace] 1
+[pattern_trace] 0

@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Thu Oct 14 18:23:05 2021
+[*]
+[dumpfile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/test/rss.vcd"
+[dumpfile_mtime] "Thu Oct 14 18:21:52 2021"
+[dumpfile_size] 100024
+[savefile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/test/cicconf.gtkw"
+[timestart] 0
+[size] 1916 1041
+[pos] -1 -1
+*-23.000000 17820000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testRSS.
+[sst_width] 213
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 307
+@28
+testRSS.rst
+testRSS.clk
+testRSS.mclk
+testRSS.ce
+>110425
+testRSS.ce_pcm
+@420
+>0
+testRSS.data_in
+>-10000
+testRSS.data_out[7:0]
+>0
+testRSS.fir_in[15:0]
+@421
+testRSS.fir.X1[15:0]
+@420
+testRSS.fir_out[15:0]
+@24
+testRSS.b1[15:0]
+testRSS.b1[15:0]
+[pattern_trace] 1
+[pattern_trace] 0
