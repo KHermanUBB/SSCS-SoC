@@ -46,15 +46,12 @@ ifeq ($(SIM),RTL)
 							    -I $(UPRJ_SRC_PATH) \
 	                            -o $@ \
 	                             $<  
-else  
-	iverilog -DFUNCTIONAL -DSIM -DGL -I $(PDK_PATH) \
-	-I $(CARAVEL_BEHAVIOURAL_MODELS) -I $(CARAVEL_RTL_PATH) -I $(CARAVEL_VERILOG_PATH) \
-	-I $(UPRJ_BEHAVIOURAL_MODELS) -I$(UPRJ_RTL_PATH)   -I $(UPRJ_VERILOG_PATH)  \
+else 
+## only for datapath
+	iverilog -DFUNCTIONAL -DSIM -DGL tbnetlists.v gl/sky130_fd_sc_hd.v  gl/primitives.v  \
 	-o $@ \
 	$<  
 endif
-
-
 
 %.vcd: %.vvp
 	vvp $<

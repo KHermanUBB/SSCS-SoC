@@ -3,6 +3,7 @@
 //         Mauricio Montanares, Luis Osses, Max Cerda 2021
 // ---------------------------------------------------- //     
 `timescale 1ps / 1ps
+// comment for GL
 `include "uprj_netlists.v"
 module datapath_tb ();
   
@@ -32,11 +33,12 @@ module datapath_tb ();
   wire signed [15:0] fir_in;
   reg      valid_i;
   reg  mclear;
-  wire [15:0] ack_o;
+  wire  ack_o;
   wire [15:0] dat_o;
   wire io_in;
   wire cmp;
-  
+  reg VCC;
+  reg VSS;
   reg [31:0] adr_i;
   reg [15:0] dat_i;
   reg        strb_i;
@@ -46,6 +48,9 @@ module datapath_tb ();
 
 SonarOnChip   soc1(
 
+// uncomment for GL
+//    .VGND(VSS),
+//    .VPWR(VCC),
     .wb_clk_i(clk),
     .wb_rst_i(rst),
     .wb_valid_i(valid_i),
@@ -80,9 +85,11 @@ assign io_in = data_in;
       strb_i = 0; 
       valid_i = 0;
       mclear = 0;
+      VCC =1'b1;
+      VSS =1'b0;
 
      //read memory data
-  	  $readmemh("InputVectors/sin_for_tb.txt", data_for_test);
+  	  //$readmemh("InputVectors/sin_for_tb.txt", data_for_test);
 
 
    end
@@ -97,7 +104,7 @@ assign io_in = data_in;
     else if (ce_pdm) begin
          bit <= bit ^ 1; 
          data_in <= bit;
-         //data_in <= data_for_test[idx];
+        // data_in <= data_for_test[idx];
          idx <= idx+1;
     end
 

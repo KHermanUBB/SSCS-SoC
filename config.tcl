@@ -9,7 +9,7 @@ set ::env(CLOCK_PORT) "wb_clk_i"
 set ::env(CLOCK_NET) "wb_clk_i"
 set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 2920 3520"
-set ::env(DIE_AREA) "0 0 1000 180"
+set ::env(DIE_AREA) "0 0 1000 300"
 #set ::env(DIE_AREA) "0 0 1000 800"
 set ::env(DESIGN_IS_CORE) 0
 set ::env(PL_SKIP_INITIAL_PLACEMENT) 
