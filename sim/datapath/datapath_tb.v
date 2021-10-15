@@ -4,7 +4,7 @@
 // ---------------------------------------------------- //     
 `timescale 1ps / 1ps
 `include "uprj_netlists.v"
-module testRSS ();
+module datapath_tb ();
   
   //constants
   parameter N = 16;
@@ -23,26 +23,52 @@ module testRSS ();
   reg  data_in, data;
   reg [10:0] idx;
   reg bit;
-  wire ce, mclk, ce_pcm;
+  wire ce_pdm, mclk, ce_pcm;
   wire signed [11:0] data_out2;
   reg [7:0] prescaler;
   wire signed [15:0] fir_out;
   reg signed [15:0] b0;
   reg signed [15:0] b1;
   wire signed [15:0] fir_in;
+  reg      valid_i;
+  reg  mclear;
+  wire [15:0] ack_o;
+  wire [15:0] dat_o;
+  wire io_in;
+  wire cmp;
   
+  reg [31:0] adr_i;
+  reg [15:0] dat_i;
+  reg        strb_i;
 
-  cic         DUT(clk,rst,ce,data_in, data_out2);
-  micclk      clockgen(clk, rst, mclk, ce);
-  pcm_clk     pcmclkgen(clk, rst, prescaler, ce_pcm); 
-  FIR_Filter  fir(clk, rst, ce_pcm, fir_in, b0, b1, fir_out);
-  
-  assign fir_in =  {{4{data_out2[11]}},data_out2};
+ micclk      clockgen(clk, rst, mclk, ce_pdm);
+ pcm_clk     pcmclkgen(clk, rst, prescaler, ce_pcm); 
+
+SonarOnChip   soc1(
+
+    .wb_clk_i(clk),
+    .wb_rst_i(rst),
+    .wb_valid_i(valid_i),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o),
+    .wbs_dat_o(dat_o),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in),
+    .mclear(mclear),
+    .cmp(cmp)
+	);
+
+assign io_in = data_in;
+
 
 
   // ================== TEST BEGING ==================== //
   initial begin
-    f = $fopen("Outputs/cic_output.csv","w");
+    f = $fopen("Outputs/dp_output.csv","w");
   end
 	// ---initial values begin --- //
     initial begin
@@ -50,13 +76,15 @@ module testRSS ();
       rst = 0;
       data_in = 0;
       prescaler = 49;
-      b0 = 16'h0FFF;
-      b1 = 16'h7FFF; 
-
+      adr_i = 0;
+      strb_i = 0; 
+      valid_i = 0;
+      mclear = 0;
 
      //read memory data
   	  $readmemh("InputVectors/sin_for_tb.txt", data_for_test);
-     
+
+
    end
   // ---initial values end --- //
   
@@ -66,17 +94,24 @@ module testRSS ();
        idx <=0;
       bit <=1;
     end
-    else if (ce) begin
+    else if (ce_pdm) begin
          bit <= bit ^ 1; 
          data_in <= bit;
          //data_in <= data_for_test[idx];
          idx <= idx+1;
     end
+
+    if(idx == 20)
+       mclear <=1;
+    if(idx == 21)
+       mclear <=0;
 end
     
   //clock 
    always # 20833 clk = ~clk;
+    
 
+ 
     //--------- stimulus start! ---------- //
 
     initial begin
@@ -91,12 +126,12 @@ end
         
         data = data_for_test[count];
         if(count == 0) begin
-          $display("data_in,data_out_L1,data_out_cic");
-          $fwrite(f,"data_in,data_out_L1,data_out_cic,fir_in,fir_out\n");
+         //  $display("data_in,data_out_L1,data_out_cic");
+         // $fwrite(f,"data_in,data_out_L1,data_out_cic,fir_out\n");
         end
         if(count!=0 || count == 0) begin
-        	$display ("%d,%d,%d",data_for_test[count], DUT.sum1, data_out2);
-            $fwrite(f,"%d,%d,%d,%d,%d\n",data_for_test[count], DUT.sum1, data_out2, fir.X1, fir_out); 
+        	//$display ("%d,%d,%d",data_for_test[count], data_out2);
+           // $fwrite(f,"%d,%d,%d,\n",data_for_test[count],data_out2, fir_out); 
           
         end
     //wait for negedge clk for change the values
@@ -109,7 +144,7 @@ end
   
   //--------- dump to file! ---------- //
       initial begin
-        $dumpfile ("cic.vcd");
+        $dumpfile ("datapath.vcd");
     $dumpvars;
     end
     endmodule

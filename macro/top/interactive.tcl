@@ -26,7 +26,7 @@ add_macro_placement soc11  100 2050 N
 add_macro_placement soc12  100 2250 N
 add_macro_placement soc13  100 2450 N
 add_macro_placement soc14  100 2650 N
-add_macro_placement soc15  100 2850 N
+add_macro_placement soc15  1450 50 S
 
 manual_macro_placement f
 

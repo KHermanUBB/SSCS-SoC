@@ -2,7 +2,6 @@
 Sonar on Chip top level module based on user project example
 Files:
 defines.v - macroodefinitions (come vith Caravel)
-Mic_Clk.v - clock divider for MEMS microphones
 */
 `include "defines.v"
 
@@ -72,8 +71,7 @@ module SonarOnChip
   wire compare_out;
   /* PCM inputs from GPIO, will come from PDM */	
   wire [`BUS_WIDTH-1:0] pcm_reg_i;
-  /* PCM register output signal*/
-  wire [`BUS_WIDTH-1:0] pcm_reg_o;
+  /* ABS  output signal*/
   wire [`BUS_WIDTH-1:0] pcm_abs;
   /* Multiplier  output */
   wire [`BUS_WIDTH-1:0] mul_o;
@@ -108,8 +106,6 @@ module SonarOnChip
 
   assign wbs_ack_o = wbs_done;
   assign wbs_dat_o =  rdata;
-
-  
   assign clk = wb_clk_i;
   assign rst = wb_rst_i;
 
@@ -119,17 +115,17 @@ module SonarOnChip
 
 	always@(posedge clk) begin
 		if(rst) begin
-    wbs_done <= 0;
+        wbs_done <= 0;
 		a0 <= 0;
 		a1 <= 0;
 		a2 <= 0;
 		b1 <= 0;
 		b2 <= 0;
-		fb0 <= 0;
-		fb1 <= 0;
-    amp <= 0;
-    threshold <= 0;
-    control <= 0;
+		fb0 <= 16'h0FFF;
+		fb1 <= 16'h7FFF; 
+        amp <= 0;
+        threshold <= 16'h0010;;
+        control   <= 16'h0008;
 		pcm_load <= 0;
     rdata <= 0;
 
@@ -233,20 +229,19 @@ module SonarOnChip
         else if (timer_we)
             timer <= timer + 1'b1;
     end
+   
+   assign  timer_we = we_pcm & (srlatchQbar); 
+   /*-----------------------------------------------------------------------------*/
 
-assign  timer_we = we_pcm & (srlatchQbar); 
-/*-----------------------------------------------------------------------------*/
-
-
-assign we_pcm = control[1] ? control[2] : ce_pcm; 
+   /* select wheater the PCM clock is derived from main clock or the PCM   
+   datapath can be clocked manually*/
+  assign we_pcm = control[1] ? control[2] : ce_pcm; 
 
 
   /*-------------------------Structural modelling ----------------------------*/
   
   /*------------------------  PDM starts   -----------------------------------*/
- 
   cic  cicmodule(clk, rst, ce_pdm, pdm_data_i, cic_out);
-
   /*------------------------   PDM ends    -----------------------------------*/
   
   /*------------------------   FIR start    -----------------------------------*/
@@ -268,13 +263,7 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
     else if (we_pcm)
         pcm <= pcm_reg_i;
   end
-  assign pcm_reg_o = pcm;
-  
   /*------------------------   PCM ends    -----------------------------------*/
-  
-  /*------------------------   SE starts    -----------------------------------*/
-  //signext se(pcm_reg_o, pcm32);
-  /*------------------------   SE ends    -----------------------------------*/
   
   /*------------------------  MUL starts   -----------------------------------*/
   assign mul_i = control[3] ? pcm : iir_data; 
@@ -290,7 +279,7 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
     .clk(clk),
     .rst(rst),
     .en(we_pcm),
-    .X(pcm_reg_o),
+    .X(pcm),
     .a0(a0),
     .a1(a1),
     .a2(a2),
@@ -307,7 +296,6 @@ assign we_pcm = control[1] ? control[2] : ce_pcm;
   /*------------------------  COMP starts   ----------------------------------*/
   
   comparator comp(maf_o, threshold, compare_out);
-  
   SR_latch sr(clk, rst, mclear, compare_out, srlatchQ, srlatchQbar);
   assign cmp = srlatchQ;
   
