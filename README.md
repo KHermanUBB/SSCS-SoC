@@ -16,7 +16,7 @@ In order to reduce the footprint of the channel the filters were implemented usi
 
 ## Top level module
 
-![Alt text](images/hierearchy.drawio(2).png?raw=true "Title")
+![Alt text](images/hierearchy.drawio(2).png)
 
 
 ### Clock divider
