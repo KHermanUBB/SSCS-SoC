@@ -1,9 +1,27 @@
 # SSCS-Sonar On Chip
+## General information
 The project implements a digital system for signal processing in order to capture and process acoustics signals from 36 MEMS microphones with extended frequency range up to 85 kHz (low ultrasonic band). The system itself is a part of the Caravel harness and can be configured and managed from the Caravel using Wishbone bus.\
 The principle of operation of the system is the following:\
 Each, pulse density modulated (PDM), microphone signal is processed individually using separate channel, which demodulates PDM data recovering PCM samples, filters out audible frequencies, detects the envelope and compare its value to a configurable threshold. The result of the comparison triggers an interrupt and stops a free running timer configured in a capture mode. The timers are cleared synchronously on all channels and the value of the each timer can be read by the RISC-V processor. The  
 
+## Datapath description
 
+### PDM demodulation 
+Demodulation results
+### DSP 
+Multicycle FIR, IIR and MV filters
+## Top level module
+
+### Clock divider
+mic_clk \
+ce_pdm \
+ce_pcm \
+
+### Channel multiplexing
+WB Bus reduction
+
+
+## Register map
 Memory map of the system starts at address 0x3000 0000 (Wishbone Slave address space):
 Register     | Value
 ------------ | -------------
@@ -32,15 +50,16 @@ All channels have the same register map starting from control register. The cont
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=0x3000\_0000&space;&plus;&space;64(n-1)&plus;8" target="_blank"><img src="https://latex.codecogs.com/gif.latex?0x3000\_0000&space;&plus;&space;64(n-1)&plus;8" title="0x3000\_0000 + 64(n-1)+8" /></a>
 
-* Item 1
-* Item 2
-  * Item 2a
-  * Item 2b
 
 
-![Mainlayout](15channels)
+## Pending Issues
 
+* Static Timing Analysis - Hold violations, multicycle paths
+* Antenna violations.
+* Functional simulation at the gate level in hierarquical design. 
+ 
 
+## Folder description
 
 config.tcl - main script for the OpenLane flow
 
