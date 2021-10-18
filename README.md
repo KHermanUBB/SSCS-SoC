@@ -1,4 +1,46 @@
-# SSCS-SoC
+# SSCS-Sonar On Chip
+The project implements a digital system for signal processing in order to capture and process acoustics signals from 36 MEMS microphones with extended frequency range up to 85 kHz (low ultrasonic band). The system itself is a part of the Caravel harness and can be configured and managed from the Caravel using Wishbone bus.\
+The principle of operation of the system is the following:\
+Each, pulse density modulated (PDM), microphone signal is processed individually using separate channel, which demodulates PDM data recovering PCM samples, filters out audible frequencies, detects the envelope and compare its value to a configurable threshold. The result of the comparison triggers an interrupt and stops a free running timer configured in a capture mode. The timers are cleared synchronously on all channels and the value of the each timer can be read by the RISC-V processor. The  
+
+
+Memory map of the system starts at address 0x3000 0000 (Wishbone Slave address space):
+Register     | Value
+------------ | -------------
+Status               | 0x3000 0000
+Prescaler            | 0x3000 0004
+
+Each channel has 13 registers. The register mapping of the first channel is shown below:
+
+Register     | Value
+------------ | -------------
+Control register  | 0x3000 0008
+IIR  a0 coeff     | 0x3000 000C
+IIR  a1 coeff     | 0x3000 0010
+IIR  a2 coeff     | 0x3000 0014
+IIR  b1 coeff     | 0x3000 0018
+IIR  b2 coeff     | 0x3000 001C
+Amplification     | 0x3000 0020
+Threshold         | 0x3000 0024
+Timer             | 0x3000 0028
+PCM sample        | 0x3000 002C
+PCM Load          | 0x3000 0030
+FIR  b0 coeff     | 0x3000 0034
+FIR  b1 coeff     | 0x3000 0038
+
+All channels have the same register map starting from control register. The control register address of a n-th channel  can be calculated as follows: 
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=0x3000\_0000&space;&plus;&space;64(n-1)&plus;8" target="_blank"><img src="https://latex.codecogs.com/gif.latex?0x3000\_0000&space;&plus;&space;64(n-1)&plus;8" title="0x3000\_0000 + 64(n-1)+8" /></a>
+
+* Item 1
+* Item 2
+  * Item 2a
+  * Item 2b
+
+
+![Mainlayout](15channels)
+
+
 
 config.tcl - main script for the OpenLane flow
 
