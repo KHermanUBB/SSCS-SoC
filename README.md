@@ -9,8 +9,15 @@ Each, pulse density modulated (PDM), microphone signal is processed individually
 ### PDM demodulation 
 Demodulation results
 ### DSP 
-Multicycle FIR, IIR and MV filters
+In order to reduce the footprint of the channel the filters were implemented using only one adder and one multiplier. It is allowed due to the fact that the PCM frequency is much more lowere (50 times) than the clock frequency of the whole system.
+
+![Alt text](images/DSP.png)
+
+
 ## Top level module
+
+![Alt text](images/hierearchy.drawio(2).png?raw=true "Title")
+
 
 ### Clock divider
 mic_clk \
