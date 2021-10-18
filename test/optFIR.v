@@ -2,7 +2,7 @@
 /*
 ============ FIR filter ====================
 */
-module optFIR_Filter
+module FIR
   #(parameter N  = 16)
   (
     input         clk,

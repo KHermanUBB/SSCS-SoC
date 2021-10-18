@@ -83,7 +83,7 @@ module SonarOnChip
   reg [7:0] amp;
   reg signed [`BUS_WIDTH-1:0] pcm;
   reg signed [`BUS_WIDTH-1:0] pcm_load;
-  reg [2*`BUS_WIDTH-1:0] timer;
+  reg [`BUS_WIDTH-1:0] timer;
   //---- IIR COEFF ---- //
   reg signed [`BUS_WIDTH-1:0] a0;
   reg signed [`BUS_WIDTH-1:0] a1;
@@ -121,11 +121,15 @@ module SonarOnChip
 		a2 <= 0;
 		b1 <= 0;
 		b2 <= 0;
-		fb0 <= 16'h0FFF;
-		fb1 <= 16'h7FFF; 
+        fb0 <= 0;
+        fb1 <= 0;
+	//	fb0 <= 16'h0FFF;
+	//	fb1 <= 16'h7FFF; 
         amp <= 0;
-        threshold <= 16'h0010;;
-        control   <= 16'h0008;
+        threshold <= 0;
+        control   <= 0; 
+//        threshold <= 16'h0010;
+//        control   <= 16'h0008; 
 		pcm_load <= 0;
     rdata <= 0;
 
@@ -248,7 +252,7 @@ module SonarOnChip
 
  /* extend the 12 bit signal from PDM demodulator to 16 bit*/
   assign fir_in = {{4{cic_out[11]}}, cic_out };
-  FIR_Filter fir_filter(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out);
+  FIR fir_filter(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out);
   
   /*------------------------   FIR ends    -----------------------------------*/
   

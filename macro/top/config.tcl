@@ -52,7 +52,7 @@ set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
 
 set ::env(DIODE_INSERTION_STRATEGY) 0
 set ::env(FILL_INSERTION) 0
-set ::env(TAP_DECAP_INSERTION) 0
+set ::env(TAP_DECAP_INSERTION) 0 
 set ::env(CLOCK_TREE_SYNTH) 0
 
 set filename $::env(DESIGN_DIR)/$::env(PDK)_$::env(STD_CELL_LIBRARY)_config.tcl

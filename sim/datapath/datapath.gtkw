@@ -1,21 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Fri Oct 15 14:30:46 2021
+[*] Sat Oct 16 01:25:37 2021
 [*]
-[dumpfile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/sim/datapath/datapath.vcd"
-[dumpfile_mtime] "Fri Oct 15 14:30:21 2021"
-[dumpfile_size] 182046
+[dumpfile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/sim/datapath/vcd/SonarOnChipDatapathGL.vcd"
+[dumpfile_mtime] "Fri Oct 15 19:41:06 2021"
+[dumpfile_size] 16533390
 [savefile] "/home/icarosix/asictoolchain/OpenLane/designs/SonarOnChip/sim/datapath/datapath.gtkw"
 [timestart] 0
 [size] 1916 1041
 [pos] -1 -1
-*-23.000000 4360000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-23.000000 4104101 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] datapath_tb.
 [treeopen] datapath_tb.soc1.
-[sst_width] 213
-[signals_width] 150
+[sst_width] 392
+[signals_width] 394
 [sst_expanded] 1
-[sst_vpaned_height] 307
+[sst_vpaned_height] 519
 @28
 datapath_tb.rst
 datapath_tb.clk
@@ -25,21 +25,91 @@ datapath_tb.io_in
 datapath_tb.cmp
 @22
 datapath_tb.dat_o[15:0]
-@420
-datapath_tb.soc1.fir_in[15:0]
-datapath_tb.soc1.fir_out[15:0]
-datapath_tb.soc1.pcm[15:0]
-datapath_tb.soc1.mul_o[15:0]
-datapath_tb.soc1.mul_i[15:0]
-datapath_tb.soc1.pcm_abs[15:0]
-datapath_tb.soc1.timer[31:0]
-@28
-datapath_tb.soc1.compare_out
-@420
-datapath_tb.soc1.maf_o[15:0]
-datapath_tb.soc1.threshold[15:0]
+@800421
+#{datapath_tb.soc1.\pcm_reg_i[15:0]} datapath_tb.soc1.\pcm_reg_i[15] datapath_tb.soc1.\pcm_reg_i[14] datapath_tb.soc1.\pcm_reg_i[13] datapath_tb.soc1.\pcm_reg_i[12] datapath_tb.soc1.\pcm_reg_i[11] datapath_tb.soc1.\pcm_reg_i[10] datapath_tb.soc1.\pcm_reg_i[9] datapath_tb.soc1.\pcm_reg_i[8] datapath_tb.soc1.\pcm_reg_i[7] datapath_tb.soc1.\pcm_reg_i[6] datapath_tb.soc1.\pcm_reg_i[5] datapath_tb.soc1.\pcm_reg_i[4] datapath_tb.soc1.\pcm_reg_i[3] datapath_tb.soc1.\pcm_reg_i[2] datapath_tb.soc1.\pcm_reg_i[1] datapath_tb.soc1.\pcm_reg_i[0]
+@29
+datapath_tb.soc1.\pcm_reg_i[0]
+datapath_tb.soc1.\pcm_reg_i[1]
+datapath_tb.soc1.\pcm_reg_i[2]
+datapath_tb.soc1.\pcm_reg_i[3]
+datapath_tb.soc1.\pcm_reg_i[4]
+datapath_tb.soc1.\pcm_reg_i[5]
+datapath_tb.soc1.\pcm_reg_i[6]
+datapath_tb.soc1.\pcm_reg_i[7]
+datapath_tb.soc1.\pcm_reg_i[8]
+datapath_tb.soc1.\pcm_reg_i[9]
+datapath_tb.soc1.\pcm_reg_i[10]
+datapath_tb.soc1.\pcm_reg_i[11]
+datapath_tb.soc1.\pcm_reg_i[12]
+datapath_tb.soc1.\pcm_reg_i[13]
+datapath_tb.soc1.\pcm_reg_i[14]
+datapath_tb.soc1.\pcm_reg_i[15]
+@1001201
+-group_end
 @28
 datapath_tb.mclear
+@800420
+#{datapath_tb.soc1.\timer[15:0]} datapath_tb.soc1.\timer[15] datapath_tb.soc1.\timer[14] datapath_tb.soc1.\timer[13] datapath_tb.soc1.\timer[12] datapath_tb.soc1.\timer[11] datapath_tb.soc1.\timer[10] datapath_tb.soc1.\timer[9] datapath_tb.soc1.\timer[8] datapath_tb.soc1.\timer[7] datapath_tb.soc1.\timer[6] datapath_tb.soc1.\timer[5] datapath_tb.soc1.\timer[4] datapath_tb.soc1.\timer[3] datapath_tb.soc1.\timer[2] datapath_tb.soc1.\timer[1] datapath_tb.soc1.\timer[0]
+@28
+datapath_tb.soc1.\timer[0]
+datapath_tb.soc1.\timer[1]
+datapath_tb.soc1.\timer[2]
+datapath_tb.soc1.\timer[3]
+datapath_tb.soc1.\timer[4]
+datapath_tb.soc1.\timer[5]
+datapath_tb.soc1.\timer[6]
+datapath_tb.soc1.\timer[7]
+datapath_tb.soc1.\timer[8]
+datapath_tb.soc1.\timer[9]
+datapath_tb.soc1.\timer[10]
+datapath_tb.soc1.\timer[11]
+datapath_tb.soc1.\timer[12]
+datapath_tb.soc1.\timer[13]
+datapath_tb.soc1.\timer[14]
+datapath_tb.soc1.\timer[15]
+datapath_tb.soc1.\control[3]
+datapath_tb.soc1.\control[4]
+@1001200
+-group_end
+@28
 datapath_tb.cmp
+@800420
+#{datapath_tb.soc1.\fir_filter.X1[11:0]} datapath_tb.soc1.\fir_filter.X1[11] datapath_tb.soc1.\fir_filter.X1[10] datapath_tb.soc1.\fir_filter.X1[9] datapath_tb.soc1.\fir_filter.X1[8] datapath_tb.soc1.\fir_filter.X1[7] datapath_tb.soc1.\fir_filter.X1[6] datapath_tb.soc1.\fir_filter.X1[5] datapath_tb.soc1.\fir_filter.X1[4] datapath_tb.soc1.\fir_filter.X1[3] datapath_tb.soc1.\fir_filter.X1[2] datapath_tb.soc1.\fir_filter.X1[1] datapath_tb.soc1.\fir_filter.X1[0]
+@28
+datapath_tb.soc1.\fir_filter.X1[0]
+datapath_tb.soc1.\fir_filter.X1[1]
+datapath_tb.soc1.\fir_filter.X1[2]
+datapath_tb.soc1.\fir_filter.X1[3]
+datapath_tb.soc1.\fir_filter.X1[4]
+datapath_tb.soc1.\fir_filter.X1[5]
+datapath_tb.soc1.\fir_filter.X1[6]
+datapath_tb.soc1.\fir_filter.X1[7]
+datapath_tb.soc1.\fir_filter.X1[8]
+datapath_tb.soc1.\fir_filter.X1[9]
+datapath_tb.soc1.\fir_filter.X1[10]
+datapath_tb.soc1.\fir_filter.X1[11]
+@1001200
+-group_end
+@800420
+#{datapath_tb.soc1.\fir_filter.Y[15:0]} datapath_tb.soc1.\fir_filter.Y[15] datapath_tb.soc1.\fir_filter.Y[14] datapath_tb.soc1.\fir_filter.Y[13] datapath_tb.soc1.\fir_filter.Y[12] datapath_tb.soc1.\fir_filter.Y[11] datapath_tb.soc1.\fir_filter.Y[10] datapath_tb.soc1.\fir_filter.Y[9] datapath_tb.soc1.\fir_filter.Y[8] datapath_tb.soc1.\fir_filter.Y[7] datapath_tb.soc1.\fir_filter.Y[6] datapath_tb.soc1.\fir_filter.Y[5] datapath_tb.soc1.\fir_filter.Y[4] datapath_tb.soc1.\fir_filter.Y[3] datapath_tb.soc1.\fir_filter.Y[2] datapath_tb.soc1.\fir_filter.Y[1] datapath_tb.soc1.\fir_filter.Y[0]
+@28
+datapath_tb.soc1.\fir_filter.Y[0]
+datapath_tb.soc1.\fir_filter.Y[1]
+datapath_tb.soc1.\fir_filter.Y[2]
+datapath_tb.soc1.\fir_filter.Y[3]
+datapath_tb.soc1.\fir_filter.Y[4]
+datapath_tb.soc1.\fir_filter.Y[5]
+datapath_tb.soc1.\fir_filter.Y[6]
+datapath_tb.soc1.\fir_filter.Y[7]
+datapath_tb.soc1.\fir_filter.Y[8]
+datapath_tb.soc1.\fir_filter.Y[9]
+datapath_tb.soc1.\fir_filter.Y[10]
+datapath_tb.soc1.\fir_filter.Y[11]
+datapath_tb.soc1.\fir_filter.Y[12]
+datapath_tb.soc1.\fir_filter.Y[13]
+datapath_tb.soc1.\fir_filter.Y[14]
+datapath_tb.soc1.\fir_filter.Y[15]
+@1001200
+-group_end
 [pattern_trace] 1
 [pattern_trace] 0

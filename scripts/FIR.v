@@ -6,10 +6,10 @@ module FIR
     input         clk,
     input         rst,
     input         en,
-    input  signed [15:0] X_i,
+    input  signed [15:0] X,
     input  signed [15:0] b0,
     input  signed [15:0] b1,
-    output signed [15:0] Y_o
+    output signed [15:0] Y
 );
   
   reg signed [15:0] X1;
@@ -23,7 +23,7 @@ module FIR
   assign prod1 =  (X1*b0) >>> 15;
   assign prod2 =  (X1*b1) >>> 15;
 
-  assign Y_o = Yt;
+  assign Y = Yt;
 
 
   always@(posedge clk) begin
@@ -33,9 +33,9 @@ module FIR
       Yt <= 0;
     end
     else if(en == 1) begin 
-      X1 <= X_i;
+      X1 <= X;
       Yt <= prod1+ prod2;
     end
-    end
+  end
 
 endmodule
