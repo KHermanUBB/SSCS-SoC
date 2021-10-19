@@ -5,12 +5,31 @@ The principle of operation of the system is the following:\
 Each, pulse density modulated (PDM), microphone signal is processed individually using separate channel, which demodulates PDM data recovering PCM samples, filters out audible frequencies, detects the envelope and compare its value to a configurable threshold. The result of the comparison triggers an interrupt and stops a free running timer configured in a capture mode. The timers are cleared synchronously on all channels and the value of the each timer can be read by the RISC-V processor. The  
 
 ## Datapath description
+Each channel consists of PDM demodulator, which process the incoming signal. The datapath has some configuration options based on control register:
+* control[0] bit if set to logic 1 it permits to use control[1] bit as a WE signal for the PCM datapath, if set to 0 (default) WE is generated automatically.
+* control[2] bit if set to logic 1 it bypasses the IIR filter, default value is 0,
+* control[3] bit if set to logic 1 permits to load the PCM datapath with a value stored in pcm_load register (default 0),
+
 
 ### PDM demodulation 
 Demodulation results
 ### DSP 
-Multicycle FIR, IIR and MV filters
+In order to reduce the footprint of the channel the filters were implemented using only one adder and one multiplier. It is allowed due to the fact that the PCM frequency is much more lower (50 times) than the clock frequency of the whole system. The FIR, IIR and Moaving Average (MA) filters are calculated in a subsequent sycles sharing same multiplier and adder. It was implemented using a FSM in the file src/FILTERS.v
+
+![Alt text](images/DSP.png)
+
+
 ## Top level module
+The top level module consists of 36 channels, status register, prescaler register, three clock diviers, which generate :
+* a 4.8 MHz clock signal for the external microphones (50 % duty cycle),
+* a 4.8 MHz clock enable signal ce_pdm for PDM demodulator,
+* a 480 kHz (configurable) clock enable signal ce_pcm for the PCM datapath. 
+Moreover the top level implements a Wishbone slave, which multiplaxes all channels using reduced data interface (16 bits) and address bus (4 bits). 
+The multipexation scheme is based on address decoding and selection of a current module using One-Hot valid signal. 
+The status  register together with the most significant byte of the prescaler register hold the values of the comparison of all 36 channels. Those values are OR-ed  and passed to the IRQ[0] signal indicating detection of the signal of any microphone. The IRQ[1] and IRQ[2] are routed to the compare output of the most extreeme channels, what will permit not only detect the signal but also to determine the direction of arrival in a case of a linear array. The prescaler register set up the WE signal frequency for the PCM datapath, thus, various decimation values can be used in the datapath. The default value is 49, what corresponds to the decimation factor of 10. 
+
+![Alt text](images/hier.png)
+
 
 ### Clock divider
 mic_clk \
