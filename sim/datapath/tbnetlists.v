@@ -20,7 +20,7 @@
 `ifdef GL
     // Assume default net type to be wire because GL netlists don't have the wire definitions
     `default_nettype wire
-    `include "../../gl/SonarOnChipGL.v"
+    `include "../../gl/SonarOnChip.lvs.powered.v"
     `include "../../rtl/clk_div.v"
 `else
     `include "user_project_wrapper.v"

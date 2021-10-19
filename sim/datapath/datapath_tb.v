@@ -4,7 +4,7 @@
 // ---------------------------------------------------- //     
 `timescale 1ps / 1ps
 // comment for GL
-`include "uprj_netlists.v"
+//`include "uprj_netlists.v"
 module datapath_tb ();
   
   //constants
@@ -49,8 +49,8 @@ module datapath_tb ();
 SonarOnChip   soc1(
 
 // uncomment for GL
-//    .VGND(VSS),
-//    .VPWR(VCC),
+    .VGND(VSS),
+    .VPWR(VCC),
     .wb_clk_i(clk),
     .wb_rst_i(rst),
     .wb_valid_i(valid_i),
@@ -73,7 +73,7 @@ assign io_in = data_in;
 
   // ================== TEST BEGING ==================== //
   initial begin
-    f = $fopen("Outputs/dp_output.csv","w");
+    f = $fopen("sin_for_tb.txt","w");
   end
 	// ---initial values begin --- //
     initial begin
@@ -89,7 +89,7 @@ assign io_in = data_in;
       VSS =1'b0;
 
      //read memory data
-  	  //$readmemh("InputVectors/sin_for_tb.txt", data_for_test);
+  	  $readmemh("InputVectors/sin_for_tb.txt", data_for_test);
 
 
    end
@@ -103,8 +103,8 @@ assign io_in = data_in;
     end
     else if (ce_pdm) begin
          bit <= bit ^ 1; 
-         data_in <= bit;
-        // data_in <= data_for_test[idx];
+        // data_in <= bit;
+         data_in <= data_for_test[idx];
          idx <= idx+1;
     end
 

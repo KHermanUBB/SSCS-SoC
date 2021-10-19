@@ -43,7 +43,6 @@ module SonarOnChip
     output wire  cmp
 	);
 
-
   /*----------------------------- Register map begins ---------------------*/
 
   localparam  CONTROL_ADDR 		=  'd0;
@@ -116,22 +115,22 @@ module SonarOnChip
 	always@(posedge clk) begin
 		if(rst) begin
         wbs_done <= 0;
-		a0 <= 0;
-		a1 <= 0;
-		a2 <= 0;
-		b1 <= 0;
-		b2 <= 0;
-        fb0 <= 0;
-        fb1 <= 0;
-	//	fb0 <= 16'h0FFF;
-	//	fb1 <= 16'h7FFF; 
-        amp <= 0;
-        threshold <= 0;
-        control   <= 0; 
-//        threshold <= 16'h0010;
-//        control   <= 16'h0008; 
-		pcm_load <= 0;
-    rdata <= 0;
+		a0 <= 16'h0001;
+		a1 <= 16'h0002;
+		a2 <= 16'h0003;
+		b1 <= 16'h0004;
+		b2 <= 16'h0005;
+  //      fb0 <= 0;
+   //     fb1 <= 0;
+		fb0 <= 16'h0FFF;
+		fb1 <= 16'h7FFF; 
+        amp <= 8'h01;
+ //       threshold <= 0;
+  //      control   <= 0; 
+        threshold <= 16'h0010;
+        control   <= 16'h0008; 
+		pcm_load <= 16'h0001;
+        rdata <= 16'h0000;
 
 		end
 		else begin
@@ -252,7 +251,7 @@ module SonarOnChip
 
  /* extend the 12 bit signal from PDM demodulator to 16 bit*/
   assign fir_in = {{4{cic_out[11]}}, cic_out };
-  FIR fir_filter(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out);
+ // FIR fir_filter(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out);
   
   /*------------------------   FIR ends    -----------------------------------*/
   
@@ -279,7 +278,7 @@ module SonarOnChip
   /*------------------------   ABS ends    -----------------------------------*/
   
   /*------------------------  IIR starts   -----------------------------------*/
-	IIR_Filter u_Filter(
+/*	IIR_Filter u_Filter(
     .clk(clk),
     .rst(rst),
     .en(we_pcm),
@@ -291,10 +290,12 @@ module SonarOnChip
     .b2(b2),
     .Y(iir_data)
 		);
+*/
+
   /*------------------------   IIR ends    -----------------------------------*/
   
   /*------------------------  MAMOV starts   ---------------------------------*/
-  MAF_FILTER maf(clk, rst, we_pcm, pcm_abs, maf_o);
+ // MAF_FILTER maf(clk, rst, we_pcm, pcm_abs, maf_o);
   /*------------------------   MAMOV ends    ---------------------------------*/
   
   /*------------------------  COMP starts   ----------------------------------*/
@@ -305,5 +306,13 @@ module SonarOnChip
   
   /*------------------------   COMP ends    ----------------------------------*/
   
+
+
+ Filters  filt(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out, pcm, a0, a1, a2, b1, b2, iir_data, pcm_abs, maf_o);
+
+
+
+
+
 endmodule
 
