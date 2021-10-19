@@ -2,7 +2,7 @@
 ## General information
 The project implements a digital system for signal processing in order to capture and process acoustics signals from 36 MEMS microphones with extended frequency range up to 85 kHz (low ultrasonic band). The system itself is a part of the Caravel harness and can be configured and managed from the Caravel using Wishbone bus.\
 The principle of operation of the system is the following:\
-Each, pulse density modulated (PDM), microphone signal is processed individually using separate channel, which demodulates PDM data recovering PCM samples, filters out audible frequencies, detects the envelope and compare its value to a configurable threshold. The result of the comparison triggers an interrupt and stops a free running timer configured in a capture mode. The timers are cleared synchronously on all channels and the value of the each timer can be read by the RISC-V processor. The  
+Each, pulse density modulated (PDM), microphone signal is processed individually using separate channel, which demodulates PDM data recovering PCM samples, filters out audible frequencies, detects the envelope and compare its value to a configurable threshold. The result of the comparison triggers an interrupt and stops a free running timer configured in a capture mode. The timers are cleared synchronously on all channels and the value of the each timer can be read by the RISC-V processor. The captured values of the 36 timers can be post processed on the RISC-V processor and the direction of arrival of the wavefront can b estimated.  
 
 ## Datapath description
 Each channel consists of PDM demodulator, which process the incoming signal. The datapath has some configuration options based on control register:
@@ -21,18 +21,17 @@ In order to reduce the footprint of the channel the filters were implemented usi
 
 ## Top level module
 The top level module consists of 36 channels, status register, prescaler register, three clock diviers, which generate :
-* a 4.8 MHz clock signal for the external microphones (50 % duty cycle),
-* a 4.8 MHz clock enable signal ce_pdm for PDM demodulator,
-* a 480 kHz (configurable) clock enable signal ce_pcm for the PCM datapath. \
+* a 4.8 MHz clock signal **mclk** for the external microphones (50 % duty cycle),
+* a 4.8 MHz clock enable signal **ce_pdm** for PDM demodulator,
+* a 480 kHz (configurable) clock enable signal **ce_pcm** for the PCM datapath. 
 
 ![Alt text](images/clocks.png)
 
-Moreover the top level implements a Wishbone slave, which multiplaxes all channels using reduced data interface (16 bits) and address bus (4 bits). 
+The top level implements a Wishbone slave, which multiplexes all channels using reduced data interface (16 bits) and address bus (4 bits). 
 The multipexation scheme is based on address decoding and selection of a current module using One-Hot valid signal. 
-The status  register together with the most significant byte of the prescaler register hold the values of the comparison of all 36 channels. Those values are OR-ed  and passed to the IRQ[0] signal indicating detection of the signal of any microphone. The IRQ[1] and IRQ[2] are routed to the compare output of the first and to the last channel (associated with microphones on extreeme position on a microphone array), what will permit not only detect the signal but also to determine the direction of arrival of an ultrasonic wave. The prescaler register set up the WE signal frequency for the PCM datapath, thus, various decimation values can be used in the datapath. The default value is 49, what corresponds to the decimation factor of 10. 
+The status  register together with the most significant byte of the prescaler register hold the values of the comparison of all 36 channels. Those values are OR-ed  and passed to the IRQ[0] signal indicating detection of the signal of any microphone. The IRQ[1] and IRQ[2] are routed to the compare output of the most extreeme channels, what will permit not only detect the signal but also to determine the direction of arrival in a case of a linear array. The prescaler register set up the WE signal frequency for the PCM datapath, thus, various decimation values can be used in the datapath. The default value is 49, what corresponds to the decimation factor of 10. 
 
-![Alt text](images/hier.png)
-
+<img src="images/hier.png" width="400">
 
 ### Clock divider
 mic_clk \
