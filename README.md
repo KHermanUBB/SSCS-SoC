@@ -24,6 +24,9 @@ The top level module consists of 36 channels, status register, prescaler registe
 * a 4.8 MHz clock signal for the external microphones (50 % duty cycle),
 * a 4.8 MHz clock enable signal ce_pdm for PDM demodulator,
 * a 480 kHz (configurable) clock enable signal ce_pcm for the PCM datapath. 
+
+![Alt text](images/clocks.png)
+
 Moreover the top level implements a Wishbone slave, which multiplaxes all channels using reduced data interface (16 bits) and address bus (4 bits). 
 The multipexation scheme is based on address decoding and selection of a current module using One-Hot valid signal. 
 The status  register together with the most significant byte of the prescaler register hold the values of the comparison of all 36 channels. Those values are OR-ed  and passed to the IRQ[0] signal indicating detection of the signal of any microphone. The IRQ[1] and IRQ[2] are routed to the compare output of the most extreeme channels, what will permit not only detect the signal but also to determine the direction of arrival in a case of a linear array. The prescaler register set up the WE signal frequency for the PCM datapath, thus, various decimation values can be used in the datapath. The default value is 49, what corresponds to the decimation factor of 10. 
