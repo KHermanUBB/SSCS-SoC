@@ -10,16 +10,13 @@ set ::env(CLOCK_NET) "wb_clk_i"
 set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 2920 3520"
 set ::env(DIE_AREA) "0 0 1000 150"
-#set ::env(DIE_AREA) "0 0 1000 800"
 set ::env(DESIGN_IS_CORE) 0
-set ::env(PL_SKIP_INITIAL_PLACEMENT) 
-set ::env(PL_TARGET_DENSITY) 0.5
-#set ::env(PL_TARGET_DENSITY) 0.4
-#set ::env(FP_ASPECT_RATIO) 0.3571
+set ::env(PL_SKIP_INITIAL_PLACEMENT) 0
+set ::env(PL_TARGET_DENSITY) 0.56
+
 set ::env(FP_CORE_UTIL) 60
 set ::env(GLB_RT_ALLOW_CONGESTION) 1
-set ::env(SYNTH_STRATEGY) "DELAY 0"
-#set ::env(FP_PDN_CORE_RING) 0
+set ::env(SYNTH_STRATEGY) "AREA 1"
 set ::env(GLB_RT_MAXLAYER) 4
 set ::env(CTS_TOLERANCE) 100
 set ::env(CTS_REPORT_TIMING) 1

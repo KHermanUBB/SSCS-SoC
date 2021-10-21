@@ -1,6 +1,6 @@
 `include "defines.v"
 
-`define MAX_SOC 16
+`define MAX_SOC 36
 `define BUS_WIDTH 16 
 
 module top (
@@ -60,14 +60,14 @@ module top (
   wire addr_valid;
 
 
-  reg [15:0] valid_i;
+  reg [`MAX_SOC-1:0] valid_i;
   wire  strb_i;
   wire [3:0] adr_i;
   wire [`BUS_WIDTH-1:0] dat_i;
   wire [10:0]  addr;
   
-  wire [`BUS_WIDTH-1:0] dat_o[`MAX_SOC-1];
-  wire                  ack_o[`MAX_SOC-1];
+  wire [`BUS_WIDTH-1:0] dat_o[`MAX_SOC];
+  wire                  ack_o[`MAX_SOC];
 
   reg [`BUS_WIDTH-1:0] wbs_dat;
   reg wbs_ack;
@@ -94,7 +94,7 @@ module top (
   always@(addr  or wb_valid or addr_valid) begin
 
 	if (wb_valid && addr_valid)  begin  
-        case(addr[8:4])   
+        case(addr[9:4])   
 				 'd0 :  begin  valid_i[0]  <= 1'b1; end  
 				 'd1 :  begin  valid_i[1]  <= 1'b1; end 
 				 'd2 :  begin  valid_i[2]  <= 1'b1; end 
@@ -110,6 +110,27 @@ module top (
 				 'd12:  begin  valid_i[12] <= 1'b1; end 
 				 'd13:  begin  valid_i[13] <= 1'b1; end 
 				 'd14:  begin  valid_i[14] <= 1'b1; end 
+				 'd15:  begin  valid_i[15] <= 1'b1; end 
+				 'd16:  begin  valid_i[16] <= 1'b1; end 
+				 'd17:  begin  valid_i[17] <= 1'b1; end 
+				 'd18:  begin  valid_i[18] <= 1'b1; end 
+				 'd19:  begin  valid_i[19] <= 1'b1; end 
+				 'd20:  begin  valid_i[20] <= 1'b1; end 
+				 'd21:  begin  valid_i[21] <= 1'b1; end 
+				 'd22:  begin  valid_i[22] <= 1'b1; end 
+				 'd23:  begin  valid_i[23] <= 1'b1; end 
+				 'd24:  begin  valid_i[24] <= 1'b1; end 
+				 'd25:  begin  valid_i[25] <= 1'b1; end 
+				 'd26:  begin  valid_i[26] <= 1'b1; end 
+				 'd27:  begin  valid_i[27] <= 1'b1; end 
+				 'd28:  begin  valid_i[28] <= 1'b1; end 
+				 'd29:  begin  valid_i[29] <= 1'b1; end 
+				 'd30:  begin  valid_i[30] <= 1'b1; end 
+				 'd31:  begin  valid_i[31] <= 1'b1; end 
+				 'd32:  begin  valid_i[32] <= 1'b1; end 
+				 'd33:  begin  valid_i[33] <= 1'b1; end 
+				 'd34:  begin  valid_i[34] <= 1'b1; end 
+				 'd35:  begin  valid_i[35] <= 1'b1; end 
                   default: begin valid_i <= 0 ;  end
 		endcase
     end
@@ -119,8 +140,8 @@ module top (
 
 
 
-  always@(valid_i   or dat_o[0] or dat_o[1] or dat_o[2] or dat_o[3] or dat_o[4] or dat_o[5] or dat_o[6] or dat_o[7] or dat_o[8] or dat_o[9] or dat_o[10] or dat_o[11] or dat_o[12] or dat_o[13] or dat_o[14] 
-                    or ack_o[0] or ack_o[1] or ack_o[2] or ack_o[3] or ack_o[4] or ack_o[5] or ack_o[6] or ack_o[7] or ack_o[8] or ack_o[9] or ack_o[10] or ack_o[11] or ack_o[12] or ack_o[13] or ack_o[14] 
+  always@(valid_i   or dat_o[0] or dat_o[1] or dat_o[2] or dat_o[3] or dat_o[4] or dat_o[5] or dat_o[6] or dat_o[7] or dat_o[8] or dat_o[9] or dat_o[10] or dat_o[11] or dat_o[12] or dat_o[13] or dat_o[14] or dat_o[15] or dat_o[16] or dat_o[17] or dat_o[18] or dat_o[19] or dat_o[20] or dat_o[21] or dat_o[22] or dat_o[23] or dat_o[24] or dat_o[25] or dat_o[26] or dat_o[27] or dat_o[28] or dat_o[29] or dat_o[30] or dat_o[31] or dat_o[32] or dat_o[33] or dat_o[34] or dat_o[35] 
+or ack_o[0] or ack_o[1] or ack_o[2] or ack_o[3] or ack_o[4] or ack_o[5] or ack_o[6] or ack_o[7] or ack_o[8] or ack_o[9] or ack_o[10] or ack_o[11] or ack_o[12] or ack_o[13] or ack_o[14] or ack_o[15] or ack_o[16] or ack_o[17] or ack_o[18] or ack_o[19]  or ack_o[20] or ack_o[21] or ack_o[22] or ack_o[23] or ack_o[24] or ack_o[25] or ack_o[26] or ack_o[27] or ack_o[28] or ack_o[29] or ack_o[30] or ack_o[31] or ack_o[32] or ack_o[33] or ack_o[34] or ack_o[35] 
                   ) begin
         case(valid_i)   
 				 'h1     :  begin 
@@ -183,7 +204,90 @@ module top (
 							wbs_dat <=  dat_o[14];
 							wbs_ack <=  ack_o[14];
                             end 
-
+				 'h8000  :  begin 
+							wbs_dat <=  dat_o[15];
+							wbs_ack <=  ack_o[15];
+                            end 
+				'h10000  :  begin 
+							wbs_dat <=  dat_o[16];
+							wbs_ack <=  ack_o[16];
+                            end 
+				'h20000  :  begin 
+							wbs_dat <=  dat_o[17];
+							wbs_ack <=  ack_o[17];
+                            end 
+				'h40000  :  begin 
+							wbs_dat <=  dat_o[18];
+							wbs_ack <=  ack_o[18];
+                            end 
+				'h80000  :  begin 
+							wbs_dat <=  dat_o[19];
+							wbs_ack <=  ack_o[19];
+                            end 
+			   'h100000  :  begin 
+							wbs_dat <=  dat_o[20];
+							wbs_ack <=  ack_o[20];
+                            end 
+			   'h200000  :  begin 
+							wbs_dat <=  dat_o[21];
+							wbs_ack <=  ack_o[21];
+                            end 
+			   'h400000  :  begin 
+							wbs_dat <=  dat_o[22];
+							wbs_ack <=  ack_o[22];
+                            end 
+			   'h800000  :  begin 
+							wbs_dat <=  dat_o[23];
+							wbs_ack <=  ack_o[23];
+                            end 
+			  'h1000000  :  begin 
+							wbs_dat <=  dat_o[24];
+							wbs_ack <=  ack_o[24];
+                            end 
+			  'h2000000  :  begin 
+							wbs_dat <=  dat_o[25];
+							wbs_ack <=  ack_o[25];
+                            end 
+			  'h4000000  :  begin 
+							wbs_dat <=  dat_o[26];
+							wbs_ack <=  ack_o[26];
+                            end 
+			  'h8000000  :  begin 
+							wbs_dat <=  dat_o[27];
+							wbs_ack <=  ack_o[27];
+                            end 
+			 'h10000000  :  begin 
+							wbs_dat <=  dat_o[28];
+							wbs_ack <=  ack_o[28];
+                            end 
+			 'h20000000  :  begin 
+							wbs_dat <=  dat_o[29];
+							wbs_ack <=  ack_o[29];
+                            end
+			 'h40000000  :  begin 
+							wbs_dat <=  dat_o[30];
+							wbs_ack <=  ack_o[30];
+                            end 
+			 'h80000000  :  begin 
+							wbs_dat <=  dat_o[31];
+							wbs_ack <=  ack_o[31];
+                            end 
+			'h100000000  :  begin 
+							wbs_dat <=  dat_o[32];
+							wbs_ack <=  ack_o[32];
+                            end
+			'h200000000  :  begin 
+							wbs_dat <=  dat_o[33];
+							wbs_ack <=  ack_o[33];
+                            end 
+			'h400000000  :  begin 
+							wbs_dat <=  dat_o[34];
+							wbs_ack <=  ack_o[34];
+                            end 
+			'h800000000  :  begin 
+							wbs_dat <=  dat_o[35];
+							wbs_ack <=  ack_o[35];
+                            end 
                   default: begin 
 							wbs_dat <=  0;
 							wbs_ack <=  0;
@@ -234,7 +338,8 @@ assign wbs_ack_o =   (valid_i != 0)  ? wbs_ack                     : wbs_done;
 			status  <= 0;
 		end 
         else 
-          status[`MAX_SOC-1:0] <= cmp;
+          status[`MAX_SOC-1:0] <= cmp[31:0];
+       
     end
 
 
@@ -525,16 +630,17 @@ SonarOnChip   soc15(
     .mclear(mclear),
     .cmp(cmp[14])
 	);
-/*
+
 SonarOnChip   soc16(
+
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
     .wb_valid_i(valid_i[15]),
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack_o[15]),
+    .wbs_dat_o(dat_o[15]),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
@@ -542,15 +648,17 @@ SonarOnChip   soc16(
     .mclear(mclear),
     .cmp(cmp[15])
 	);
+
 SonarOnChip   soc17(
+
     .wb_clk_i(wb_clk_i),
     .wb_rst_i(wb_rst_i),
     .wb_valid_i(valid_i[16]),
     .wbs_adr_i(adr_i),
     .wbs_dat_i(dat_i),
     .wbs_strb_i(strb_i),
-    .wbs_ack_o(ack_o),
-    .wbs_dat_o(dat_o),
+    .wbs_ack_o(ack_o[16]),
+    .wbs_dat_o(dat_o[16]),
     
     .ce_pdm(ce_pdm),
     .ce_pcm(ce_pcm),
@@ -558,7 +666,339 @@ SonarOnChip   soc17(
     .mclear(mclear),
     .cmp(cmp[16])
 	);
-*/
+
+
+
+SonarOnChip   soc18(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[17]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[17]),
+    .wbs_dat_o(dat_o[17]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[18]),
+    .mclear(mclear),
+    .cmp(cmp[17])
+	);
+
+SonarOnChip   soc19(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[18]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[18]),
+    .wbs_dat_o(dat_o[18]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[19]),
+    .mclear(mclear),
+    .cmp(cmp[18])
+	);
+
+SonarOnChip   soc20(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[19]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[19]),
+    .wbs_dat_o(dat_o[19]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[20]),
+    .mclear(mclear),
+    .cmp(cmp[19])
+	);
+
+SonarOnChip   soc21(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[20]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[20]),
+    .wbs_dat_o(dat_o[20]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[21]),
+    .mclear(mclear),
+    .cmp(cmp[20])
+	);
+
+
+SonarOnChip   soc22(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[21]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[21]),
+    .wbs_dat_o(dat_o[21]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[22]),
+    .mclear(mclear),
+    .cmp(cmp[21])
+	);
+
+SonarOnChip   soc23(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[22]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[22]),
+    .wbs_dat_o(dat_o[22]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[23]),
+    .mclear(mclear),
+    .cmp(cmp[22])
+	);
+
+
+SonarOnChip   soc24(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[23]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[23]),
+    .wbs_dat_o(dat_o[23]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[24]),
+    .mclear(mclear),
+    .cmp(cmp[23])
+	);
+
+SonarOnChip   soc25(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[24]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[24]),
+    .wbs_dat_o(dat_o[24]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[25]),
+    .mclear(mclear),
+    .cmp(cmp[24])
+	);
+
+SonarOnChip   soc26(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[25]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[25]),
+    .wbs_dat_o(dat_o[25]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[26]),
+    .mclear(mclear),
+    .cmp(cmp[25])
+	);
+
+
+SonarOnChip   soc27(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[26]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[26]),
+    .wbs_dat_o(dat_o[26]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[27]),
+    .mclear(mclear),
+    .cmp(cmp[26])
+	);
+
+SonarOnChip   soc28(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[27]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[27]),
+    .wbs_dat_o(dat_o[27]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[28]),
+    .mclear(mclear),
+    .cmp(cmp[27])
+	);
+
+SonarOnChip   soc29(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[28]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[28]),
+    .wbs_dat_o(dat_o[28]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[29]),
+    .mclear(mclear),
+    .cmp(cmp[28])
+	);
+
+SonarOnChip   soc30(
+
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[29]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[29]),
+    .wbs_dat_o(dat_o[29]),
+    
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[30]),
+    .mclear(mclear),
+    .cmp(cmp[29])
+	);
+
+
+    SonarOnChip   soc36(
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[35]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[35]),
+    .wbs_dat_o(dat_o[35]),
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[36]),
+    .mclear(mclear),
+    .cmp(cmp[35])
+	);
+
+      SonarOnChip   soc35(
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[34]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[34]),
+    .wbs_dat_o(dat_o[34]),
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[35]),
+    .mclear(mclear),
+    .cmp(cmp[34])
+	);
+      SonarOnChip   soc34(
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[33]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[33]),
+    .wbs_dat_o(dat_o[33]),
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[34]),
+    .mclear(mclear),
+    .cmp(cmp[33])
+	);
+      SonarOnChip   soc33(
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[32]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[32]),
+    .wbs_dat_o(dat_o[32]),
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[33]),
+    .mclear(mclear),
+    .cmp(cmp[32])
+	);
+      SonarOnChip   soc32(
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[31]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[31]),
+    .wbs_dat_o(dat_o[31]),
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[32]),
+    .mclear(mclear),
+    .cmp(cmp[31])
+	);
+
+      SonarOnChip   soc31(
+    .wb_clk_i(wb_clk_i),
+    .wb_rst_i(wb_rst_i),
+    .wb_valid_i(valid_i[30]),
+    .wbs_adr_i(adr_i),
+    .wbs_dat_i(dat_i),
+    .wbs_strb_i(strb_i),
+    .wbs_ack_o(ack_o[30]),
+    .wbs_dat_o(dat_o[30]),
+    .ce_pdm(ce_pdm),
+    .ce_pcm(ce_pcm),
+    .pdm_data_i(io_in[31]),
+    .mclear(mclear),
+    .cmp(cmp[30])
+	);
 
 /*  ----------------------  STRUCTURAL DESIGN ENDS ------------------------- */
 

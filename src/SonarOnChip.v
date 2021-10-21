@@ -78,7 +78,7 @@ module SonarOnChip
   reg wbs_done;
   wire wb_valid;
   wire [3:0] wstrb;
-  reg [`BUS_WIDTH-1:0] control;
+  reg [7:0] control;
   reg [7:0] amp;
   reg signed [`BUS_WIDTH-1:0] pcm;
   reg signed [`BUS_WIDTH-1:0] pcm_load;
@@ -115,21 +115,21 @@ module SonarOnChip
 	always@(posedge clk) begin
 		if(rst) begin
         wbs_done <= 0;
-		a0 <= 16'h0001;
-		a1 <= 16'h0002;
-		a2 <= 16'h0003;
-		b1 <= 16'h0004;
-		b2 <= 16'h0005;
-  //      fb0 <= 0;
-   //     fb1 <= 0;
+		a0 <= 16'h0000;
+		a1 <= 16'h0000;
+		a2 <= 16'h0000;
+		b1 <= 16'h0000;
+		b2 <= 16'h0000;
+        fb0 <= 0;
+        fb1 <= 0;
 		fb0 <= 16'h0FFF;
 		fb1 <= 16'h7FFF; 
-        amp <= 8'h01;
- //       threshold <= 0;
-  //      control   <= 0; 
-        threshold <= 16'h0010;
-        control   <= 16'h0008; 
-		pcm_load <= 16'h0001;
+        amp <= 8'h00;
+        threshold <= 0;
+        control   <= 0; 
+        threshold <= 16'h00F0;
+        control   <= 16'h04; 
+		pcm_load <= 16'h0000;
         rdata <= 16'h0000;
 
 		end
@@ -238,7 +238,7 @@ module SonarOnChip
 
    /* select wheater the PCM clock is derived from main clock or the PCM   
    datapath can be clocked manually*/
-  assign we_pcm = control[1] ? control[2] : ce_pcm; 
+  assign we_pcm = ce_pcm; 
 
 
   /*-------------------------Structural modelling ----------------------------*/
@@ -251,13 +251,13 @@ module SonarOnChip
 
  /* extend the 12 bit signal from PDM demodulator to 16 bit*/
   assign fir_in = {{4{cic_out[11]}}, cic_out };
- // FIR fir_filter(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out);
+// FIR fir_filter(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out);
   
   /*------------------------   FIR ends    -----------------------------------*/
   
   /*------------------------  PCM starts   -----------------------------------*/
   
-  assign pcm_reg_i = control[4] ? pcm_load :fir_out;
+  assign pcm_reg_i = control[3] ? pcm_load :fir_out;
 
 /* pcm register block */
   always@(posedge clk) begin
@@ -269,7 +269,7 @@ module SonarOnChip
   /*------------------------   PCM ends    -----------------------------------*/
   
   /*------------------------  MUL starts   -----------------------------------*/
-  assign mul_i = control[3] ? pcm : iir_data; 
+  assign mul_i = control[2] ? pcm : iir_data; 
   multiplier mul(mul_i, amp, mul_o);
   /*------------------------   MUL ends    -----------------------------------*/
     
@@ -278,7 +278,7 @@ module SonarOnChip
   /*------------------------   ABS ends    -----------------------------------*/
   
   /*------------------------  IIR starts   -----------------------------------*/
-/*	IIR_Filter u_Filter(
+	/*IIR_Filter u_Filter(
     .clk(clk),
     .rst(rst),
     .en(we_pcm),
@@ -295,7 +295,7 @@ module SonarOnChip
   /*------------------------   IIR ends    -----------------------------------*/
   
   /*------------------------  MAMOV starts   ---------------------------------*/
- // MAF_FILTER maf(clk, rst, we_pcm, pcm_abs, maf_o);
+ //MAF_FILTER maf(clk, rst, we_pcm, pcm_abs, maf_o);
   /*------------------------   MAMOV ends    ---------------------------------*/
   
   /*------------------------  COMP starts   ----------------------------------*/
@@ -308,10 +308,23 @@ module SonarOnChip
   
 
 
- Filters  filt(clk, rst, we_pcm, fir_in, fb0, fb1, fir_out, pcm, a0, a1, a2, b1, b2, iir_data, pcm_abs, maf_o);
-
-
-
+ Filters  filt( .clk(clk),
+                .rst(rst),
+                .en(we_pcm),
+                .X_fir(fir_in),
+                .b0_fir(fb0),
+                .b1_fir(fb1),
+                .Y_fir(fir_out),  
+                .X_iir(pcm), 
+                .a0_iir(a0),
+                .a1_iir(a1), 
+                .a2_iir(a2), 
+                .b1_iir(b1), 
+                .b2_iir(b2), 
+                .Y_iir(iir_data),
+                .X_maf(pcm_abs),
+                .Y_maf(maf_o)
+);
 
 
 endmodule
