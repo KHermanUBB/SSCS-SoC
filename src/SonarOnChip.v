@@ -127,7 +127,7 @@ module SonarOnChip
         amp <= 8'h00;
         threshold <= 0;
         control   <= 0; 
-        threshold <= 16'h00F0;
+        threshold <= 16'h0400;
         control   <= 16'h04; 
 		pcm_load <= 16'h0000;
         rdata <= 16'h0000;

@@ -73,20 +73,17 @@ always@(posedge clk) begin
         X1_fir <= 0;
         X2_fir <= 0;
         X3_fir <= 0;
-        X4_fir <= 0;
 
         //iir
         Y1_iir <= 0;
         Y2_iir <= 0;
         X1_iir <= 0;
         X2_iir <= 0;
-        X3_iir <= 0;
 
         //maf
         X1_maf <= 0;
         X2_maf <= 0;
         X3_maf <= 0;
-        X4_maf <= 0;
 
     end
 
@@ -103,7 +100,6 @@ always@(posedge clk) begin
         Y2_iir <= Y1_iir;
         X1_iir <= X_iir;
         X2_iir <= X1_iir;
-        X3_iir <= X2_iir;
 
         //maf
         X1_maf <= X_maf;

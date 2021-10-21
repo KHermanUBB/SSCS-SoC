@@ -4,7 +4,7 @@
 // ---------------------------------------------------- //     
 `timescale 1ps / 1ps
 // comment for GL
-//`include "uprj_netlists.v"
+`include "uprj_netlists.v"
 module datapath_tb ();
   
   //constants
@@ -49,8 +49,8 @@ module datapath_tb ();
 SonarOnChip   soc1(
 
 // uncomment for GL
-    .VGND(VSS),
-    .VPWR(VCC),
+//    .VGND(VSS),
+//    .VPWR(VCC),
     .wb_clk_i(clk),
     .wb_rst_i(rst),
     .wb_valid_i(valid_i),
