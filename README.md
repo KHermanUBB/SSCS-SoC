@@ -87,7 +87,7 @@ We have tested our RTL code at the level of a single channel and also at the lev
 The RTL level simulation of the datapath feeded with a PDM bitstream is shown in the figure below.
 
 <img src="images/1channelSim.png" width="1000">
-The **io_in** inputs provides the PDM data, which are demodulated and decimated in the datapath. the value of the timer is pushed to 0 when **mclear** occures and the timer is stopped, when the value of the MAF filter output **maf_o** is crossing the threshold. liit for a first time. 
+The io_in input provides the PDM data, which are demodulated and decimated in the datapath. the value of the timer is pushed to 0 when mclear occures and the timer is stopped, when the value of the MAF filter output maf_o is crossing the threshold. liit for a first time. 
 
 
 We have found conveniet to present the result in a form of short video. 
