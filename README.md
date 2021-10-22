@@ -16,17 +16,17 @@ The datapath has some configuration options based on control register:
 
 
 ### PDM demodulation 
-The module PDM demodulator was based on a solution presentet in the confernece article [1]. We have implemented 2 stages of Recurssive Running Sum, which is characterized by 12 bit output, what should cover the dynamic range of 72 dB. It should be sufficient due to the fact, that the MEMS microphones have the dynamics range of 62 dB (A-weighted).  In order to verify the module we hace performed some high level simulations in python and then we have made some evaluations based on the  following scheme.
+The module PDM demodulator was based on a solution presentet in the confernece article [1]. We have implemented 2 stages of Recurssive Running Sum, which is characterized by 12 bit output, what should cover the dynamic range of 72 dB. It should be sufficient due to the fact, that the MEMS microphones have the dynamics range of 62 dB (A-weighted). The block diagram of the demodulator is shown below.
+
+
+In order to verify the module we hace performed some high level simulations in python and then we have made some evaluations based on the  following scheme.
 
 <img src="images/pdmmodel.png" width="800">
 The test signal is upsampled to the frequency of PDM modulation (4.8 MHz in our case) and then modulated in software. The generated bit stream is duped to a file,
 which is used in a custom testbench. The above simulates a behavior of a MEMS microphone capturing an acoustic signal.
 In the testbench the bitstream is processed by the demodulator and the results are stored in csv filtes. The results are presented graphically on the following figures.
 
-* Signal Input
-<img src="Signal_inputs.png" width="800">
-
-* PDM demodulator output before decimation and Interpolation FIR filter input and output after decimation (by 10)
+<img src="images/Signal_inputs.png" width="800">
 <img src="images/fir_in_vs_fir_out.png" width="800">
 
 ### DSP 
