@@ -20,11 +20,10 @@ The module PDM demodulator was based on a solution presentet in the confernece a
 
 <img src="images/rss.png" width="600">
 
-In order to verify the module we hace performed some high level simulations in python and then we have made some evaluations based on the  following scheme.
+In order to verify the module we have performed some high level simulations in python and then we have made some evaluations based on the  following scheme.
 
 <img src="images/pdmmodel.png" width="800">
-The test signal is upsampled to the frequency of PDM modulation (4.8 MHz in our case) and then modulated in software. The generated bit stream is duped to a file,
-which is used in a custom testbench. The above simulates a behavior of a MEMS microphone capturing an acoustic signal.
+The test signal is upsampled to the frequency of PDM modulation (4.8 MHz in our case) and then modulated in software. The generated bit stream is dumped to a file, which is used in a custom testbench. The above simulates a behavior of a MEMS microphone capturing an acoustic signal.
 In the testbench the bitstream is processed by the demodulator and the results are stored in csv filtes. The results are presented graphically on the following figures.
 
 <img src="images/Signal_inputs.png" width="800">
