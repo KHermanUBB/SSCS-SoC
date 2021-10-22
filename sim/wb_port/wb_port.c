@@ -94,15 +94,22 @@ void main()
 	uint32_t * p = (uint32_t *) &reg_mprj_slave;
     uint32_t time; 
 
+
+// 0x3000_0000 + 64(n-1)+8
+// n: channel(soc) number 
+
     // control 
-    p[2] = 0x18; 
-    p[18] = 0x318; 
-    // amp
+    p[2] = 0x18;   //soc1 0x3000_0000 + 8 = 0x3000_0000 + 8 = x3000_0008 -> dec = 8 .. 8/4 = 2
+    p[18] = 0x318; //soc2 // 0x3000_0000 + 64(2-1)+8 = 0x3000_0000 + 72 = x3000_0048 -> dec = 72 ... 72/4 = 18
+  
     time  = p[2];
     
-    p[8] = 0x02;
+    // amp  6*4 = 24
+    p[8] = 0x02;  //soc1 0x3000_0008 + six positions up = 0x3000_0008 + 24 = x3000_0020 -> dec = 32 .. 32/4 = 8
+    p[24] = 0x03;  //soc2 0x3000_0048 + six positions up = 0x3000_0048 + 24 = x0060 -> dec = 96 .. 96/4 = 24 
+
     // treshold 
-    p[9] = 0x20;
+    p[9] = 0x20; 
     // pcm_Load
     p[12] = 0x01; 
 
