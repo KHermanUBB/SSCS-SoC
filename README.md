@@ -133,3 +133,11 @@ You should export the following variables in your .profile\
 export CARAVEL_DIR="path_to_your_caravel/caravel"\
 export RV32_GCC="/path_to/riscv32/bin"\
 export PDK_ROOT="/path_to_PDK/pdks"
+
+## Authors
+All the authors are with Department of Electrical and Electronics Engineering, University of the Bio Bii, Concepcion, Chile
+
+Mauricio Montanares (undergraduate student) - group leader responsable for: high level Python scripting, RTL code development, verification, documentation.\
+Maximiliano Cerda (undergraduate student) - responsable for: high level Matlab analysis, RLT code development, documentation.\
+Luis Osses (undergraduate student)  - responsable for: high level Matlab analysis, RLT code development, documentation.\
+Krzysztof Herman (DSc, academic teacher/researcher)- responsable for: RTL code development, verification, physical design, documentation.
