@@ -104,7 +104,7 @@ void main()
   
     time  = p[2];
     
-    // amp  6*4 = 24
+    // amp  
     p[8] = 0x02;  //soc1 0x3000_0008 + six positions up = 0x3000_0008 + 24 = x3000_0020 -> dec = 32 .. 32/4 = 8
     p[24] = 0x03;  //soc2 0x3000_0048 + six positions up = 0x3000_0048 + 24 = x0060 -> dec = 96 .. 96/4 = 24 
 
@@ -115,6 +115,7 @@ void main()
 
     for (i=0;i<4;i++);
 
+    // pcm_Load
     p[12] = 0xf0;
     p[12] = 0x01;
   
