@@ -32,10 +32,10 @@ UPRJ_BEHAVIOURAL_MODELS = ../
 ## RISCV GCC 
 GCC_PATH?= $(RV32_GCC)
 GCC_PREFIX?=riscv32-unknown-elf
-PDK_PATH?=$(PDK_ROOT)/sky130A
+PDK_PATH?=$(PDK_ROOT)#/sky130A
 
 ## Simulation mode: RTL/GL
-SIM?=GL
+SIM?=RTL
 
 .SUFFIXES:
 

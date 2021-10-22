@@ -24,13 +24,10 @@ which is used in a custom testbench. The above simulates a behavior of a MEMS mi
 In the testbench the bitstream is processed by the demodulator and the results are stored in csv filtes. The results are presented graphically on the following figures.
 
 * Signal Input
-<img src="images/Signal_in.png" width="400">
+<img src="Signal_inputs.png" width="800">
 
-* Signal before decimation
-<img src="images/CIC_out.png" width="400">
-
-* FIR input VS FIR output
-<img src="images/fir_in_vs_fir_out.png" width="400">
+* PDM demodulator output before decimation and Interpolation FIR filter input and output after decimation (by 10)
+<img src="images/fir_in_vs_fir_out.png" width="800">
 
 ### DSP 
 In order to reduce the footprint of the channel the filters were implemented using only one adder and one multiplier. It is allowed due to the fact that the PCM frequency is much more lower (50 times) than the clock frequency of the whole system. The FIR, IIR and Moaving Average (MA) filters are calculated in a subsequent sycles sharing same multiplier and adder. It was implemented using a FSM in the file src/FILTERS.v
