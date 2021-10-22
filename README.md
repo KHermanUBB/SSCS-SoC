@@ -18,6 +18,7 @@ The datapath has some configuration options based on control register:
 ### PDM demodulation 
 The module PDM demodulator was based on a solution presentet in the confernece article [1]. We have implemented 2 stages of Recurssive Running Sum, which is characterized by 12 bit output, what should cover the dynamic range of 72 dB. It should be sufficient due to the fact, that the MEMS microphones have the dynamics range of 62 dB (A-weighted). The block diagram of the demodulator is shown below.
 
+<img src="images/rss.png" width="600">
 
 In order to verify the module we hace performed some high level simulations in python and then we have made some evaluations based on the  following scheme.
 
