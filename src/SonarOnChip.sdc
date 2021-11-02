@@ -45,9 +45,9 @@ set_output_delay -clock wb_clk_i 2 [get_ports wbs_dat_o*]
 set_output_delay -clock wb_clk_i 2 [get_ports cmp]
 
 # constraint Your outputs
-set_load 0.1 [get_ports wbs_ack_o*]
-set_load 0.1 [get_ports wbs_dat_o*]
-set_load 0.1 [get_ports cmp]
+set_load 0.035 [get_ports wbs_ack_o*]
+set_load 0.035 [get_ports wbs_dat_o*]
+set_load 0.035 [get_ports cmp]
 
 # --------------------------------- PIN SPECIFIC VALUES----------------------------------------------------
 

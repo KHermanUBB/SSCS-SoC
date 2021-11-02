@@ -88,7 +88,7 @@ module top (
   assign mclear  = la_data_in[0];
   /*  assign 4.5 MHz clock on GPIO0*/
   assign io_out[0] = mclk;
-  assign io_oeb[0] = 1'b1;
+  assign io_oeb[0] = 1'b0;
 
 
   always@(addr  or wb_valid or addr_valid) begin
