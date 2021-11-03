@@ -15,7 +15,7 @@ set ::env(CLOCK_PERIOD) "40.0"
 set ::env(CLOCK_PORT) "wb_clk_i"
 
 #set ::env(DIE_AREA) "0 0 2920 3520"
-set ::env(DIE_AREA) "0 0 2500 3100"
+set ::env(DIE_AREA) "0 0 2500 3200"
 ## Internal Macros
 ### Macro Placement
 #set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
@@ -43,17 +43,22 @@ set ::env(FP_PDN_CHECK_NODES) 0
 set ::env(DESIGN_IS_CORE) 0
 set ::env(SYNTH_STRATEGY) "AREA 0" 
 
-set ::env(PL_RANDOM_GLB_PLACEMENT) 1
+set ::env(PL_RANDOM_GLB_PLACEMENT) 0
 
-set ::env(PL_RESIZER_DESIGN_OPTIMIZATIONS) 0
-set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) 0
-set ::env(PL_RESIZER_BUFFER_INPUT_PORTS) 0
-set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
+set ::env(PL_RESIZER_DESIGN_OPTIMIZATIONS) 1
+set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) 1
+set ::env(PL_RESIZER_BUFFER_INPUT_PORTS) 1
+set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 1
+#set ::env(QUIT_ON_ILLEGAL_OVERLAPS) 0
+set ::env(MAGIC_EXT_USE_GDS) 1
+set ::env(RUN_CVC) 0
 
 set ::env(DIODE_INSERTION_STRATEGY) 0
 set ::env(FILL_INSERTION) 0
 set ::env(TAP_DECAP_INSERTION) 0 
-set ::env(CLOCK_TREE_SYNTH) 0
+set ::env(CLOCK_TREE_SYNTH) 1
+set ::env(BASE_SDC_FILE) "$script_dir/src/top.sdc"
+
 
 set filename $::env(DESIGN_DIR)/$::env(PDK)_$::env(STD_CELL_LIBRARY)_config.tcl
 if { [file exists $filename] == 1} {

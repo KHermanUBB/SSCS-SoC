@@ -2,6 +2,7 @@
 
 `define MAX_SOC 36
 `define BUS_WIDTH 16 
+`define USE_POWER_PINS
 
 module top (
 `ifdef USE_POWER_PINS
