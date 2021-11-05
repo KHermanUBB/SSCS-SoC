@@ -14,8 +14,7 @@ set ::env(VERILOG_FILES) "\
 set ::env(CLOCK_PERIOD) "40.0"
 set ::env(CLOCK_PORT) "wb_clk_i"
 
-#set ::env(DIE_AREA) "0 0 2920 3520"a
-set ::env(FP_SIZING) absolute
+#set ::env(DIE_AREA) "0 0 2920 3520"
 set ::env(DIE_AREA) "0 0 2500 3200"
 ## Internal Macros
 ### Macro Placement
@@ -30,7 +29,7 @@ set ::env(EXTRA_LEFS) "$script_dir/macro/SonarOnChip.lef"
 
 set ::env(EXTRA_GDS_FILES) "$script_dir/macro/SonarOnChip.gds"
 
-#source $script_dir/fixed_wrapper_cfgs.tcl
+source $script_dir/fixed_wrapper_cfgs.tcl
 
 
 set ::env(FP_CORE_UTIL) 60
@@ -53,9 +52,6 @@ set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 1
 #set ::env(QUIT_ON_ILLEGAL_OVERLAPS) 0
 set ::env(MAGIC_EXT_USE_GDS) 1
 set ::env(RUN_CVC) 0
-
-set ::env(VDD_NETS) [list {vccd1}]
-set ::env(GND_NETS) [list {vssd1}]
 
 set ::env(DIODE_INSERTION_STRATEGY) 0
 set ::env(FILL_INSERTION) 0

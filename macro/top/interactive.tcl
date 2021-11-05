@@ -57,7 +57,8 @@ run_placement
 #global_routing_or
 run_cts
 run_routing
-write_powered_verilog set_netlist $::env(lvs_result_file_tag).powered.v
+write_powered_verilog 
+#set_netlist $::env(lvs_result_file_tag).powered.v
 run_magic
 run_magic_spice_export
 save_views       -lef_path $::env(magic_result_file_tag).lef \
@@ -66,6 +67,6 @@ save_views       -lef_path $::env(magic_result_file_tag).lef \
                  -mag_path $::env(magic_result_file_tag).mag \
                  -save_path $save_path \
                  -tag $::env(RUN_TAG)
-run_magic_drc
-run_lvs; # requires run_magic_spice_export
-run_antenna_check        
+#run_magic_drc
+#run_lvs; # requires run_magic_spice_export
+#run_antenna_check        

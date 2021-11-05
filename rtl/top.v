@@ -90,7 +90,43 @@ module top (
   /*  assign 4.5 MHz clock on GPIO0*/
   assign io_out[0] = mclk;
   assign io_oeb[0] = 1'b0;
-
+  
+  assign io_oeb[1] = 1'b1;
+  assign io_oeb[2] = 1'b1;
+  assign io_oeb[3] = 1'b1;
+  assign io_oeb[4] = 1'b1;
+  assign io_oeb[5] = 1'b1;
+  assign io_oeb[6] = 1'b1;
+  assign io_oeb[7] = 1'b1;
+  assign io_oeb[8] = 1'b1;
+  assign io_oeb[9] = 1'b1;
+  assign io_oeb[10] = 1'b1;
+  assign io_oeb[11] = 1'b1;
+  assign io_oeb[12] = 1'b1;
+  assign io_oeb[13] = 1'b1;
+  assign io_oeb[14] = 1'b1;
+  assign io_oeb[15] = 1'b1;
+  assign io_oeb[16] = 1'b1;
+  assign io_oeb[17] = 1'b1;
+  assign io_oeb[18] = 1'b1;
+  assign io_oeb[19] = 1'b1;
+  assign io_oeb[20] = 1'b1;
+  assign io_oeb[21] = 1'b1;
+  assign io_oeb[22] = 1'b1;
+  assign io_oeb[23] = 1'b1;
+  assign io_oeb[24] = 1'b1;
+  assign io_oeb[25] = 1'b1;
+  assign io_oeb[26] = 1'b1;
+  assign io_oeb[27] = 1'b1;
+  assign io_oeb[28] = 1'b1;
+  assign io_oeb[29] = 1'b1;
+  assign io_oeb[30] = 1'b1;
+  assign io_oeb[31] = 1'b1;
+  assign io_oeb[32] = 1'b1;
+  assign io_oeb[33] = 1'b1;
+  assign io_oeb[34] = 1'b1;
+  assign io_oeb[35] = 1'b1;
+  assign io_oeb[36] = 1'b1;
 
   always@(addr  or wb_valid or addr_valid) begin
 
